@@ -1,0 +1,23 @@
+# Jekyll Defaults
+title: Innerverz 기술 블로그
+description: ""
+baseurl: "" # the subpath of your site, e.g. /blog
+
+url: "https://innerverz-ai.github.io/"
+github: http://github.com/Innerverz-AI
+highlighter: rouge
+markdown: kramdown
+permalink: /post/:title/
+paginate: 4
+gems: [jekyll-paginate]
+paginate_path: "/page:num"
+rss_path: /feed.xml
+navigation:
+- text: About
+  url: /about/
+- text: Archives
+  url: /archives/
+- text: Tags
+  url: /tags/
+
+plugins: [jekyll-paginate]
