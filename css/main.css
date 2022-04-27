@@ -207,9 +207,11 @@ a:hover {
     color: #274977
 }
 /* Allow image resizing */
-/* #main p img {
-    width: 100%
-} */
+#main p img {
+    /* width: 100%; */
+    display: block;
+	margin: auto;
+}
 article p a {
     border-bottom: 1px solid #e4edf9; 
     font-weight: normal;
