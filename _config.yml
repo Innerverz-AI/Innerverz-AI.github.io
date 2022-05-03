@@ -1,9 +1,9 @@
 # Jekyll Defaults
 title: Innerverz 기술 블로그
-description: ""
+description: "이너버즈로 오세요."
 baseurl: "" # the subpath of your site, e.g. /blog
 
-url: "https://innerverz-ai.github.io/"
+url: "https://innerverz-ai.github.io"
 github: http://github.com/Innerverz-AI
 highlighter: rouge
 markdown: kramdown

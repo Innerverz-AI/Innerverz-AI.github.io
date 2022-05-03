@@ -2,8 +2,23 @@
 layout: default
 ---
 <article>
-<div class="heading">{{ page.title }}</div>
-<p class="meta"><a class="permalink" href="{{ site.baseurl }}{{ post.url }}">&#9679;</a> {{ page.date | date_to_string }}</p>
+<div class="heading"> {{ page.title }}</div>
+    <!-- <p class="meta"> 
+        {{ page.date | date_to_string }}
+        {{ page.author }}
+    </p> -->
+        <!-- <a class="permalink" href="{{ site.baseurl }}{{ post.url }}">&#9679;</a> {{ page.date | date_to_string }}
+        <a class="permalink" href="{{ site.baseurl }}{{ post.url }}">&#9679;</a> {{ page.author }}
+    </p>
 {{ content }}
 {% include tags.html %}
+</article> -->
+
+<div>
+    <p class="meta">
+        {{ page.author }} | {{ page.date | date: "%Y-%m-%d" }} 
+      </p>
+    {% include tags.html %}
+  </div>
+  {{ content }}
 </article>

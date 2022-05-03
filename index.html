@@ -4,11 +4,11 @@ title: Home
 group: navigation
 ---
 
-  {% for post in paginator.posts %}
+  <!-- {% for post in paginator.posts %}
       <article>
       <div class="heading"><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></div>
       <p class="meta"><a class="permalink" href="{{ site.baseurl }}{{ post.url }}">&#9679;</a> {{ post.date | date_to_string }}</p>
-      <div>
+        <div> 
         {{ post.content }}
         </div>
              {% include tags.html %}
@@ -24,4 +24,48 @@ group: navigation
     {% if paginator.next_page %}
       <li class="next"><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older &rarr;</a></li>
   {% endif %}
-</ul>
+</ul> -->
+
+{% if site.posts.size == 0 %}
+  <h2>No post found</h2>
+{% endif %}
+
+<div class="posts">
+  {% for post in paginator.posts %}
+    <article class="post">
+      <h1>
+        <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+      </h1>
+
+      <div>
+        <p class="meta">
+          {{ post.author }} | {{ post.date | date: "%Y-%m-%d" }}
+        </p>
+        {% include tags.html %}
+      </div>
+
+      <div class="entry">
+        {{ post.excerpt }}
+      </div>
+
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">&#9655; Read More</a>
+    </article>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <span class="prev">
+      <a href="{{ site.baseurl }}{{ paginator.previous_page_path }}" class="prev">
+        &#xE000; Previous
+      </a>
+    </span>
+  {% endif %}
+  {% if paginator.next_page %}
+    <span class="next">
+      <a href="{{ site.baseurl}}{{ paginator.next_page_path }}" class="next">
+        Next &#xE001;
+      </a>
+    </span>
+  {% endif %}
+</div>
