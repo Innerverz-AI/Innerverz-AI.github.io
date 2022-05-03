@@ -6,9 +6,9 @@ author: 류원종
 tags: [Deep Learning, GAN Inversion, PTI, Latent Manipulation]
 ---
 
-![title](/assets/posts/2022-04-26-review-PTI/title.PNG){: width="100%", height="100%"}<br>
+![title](/assets/posts/face-editing/2022-04-26-review-PTI/title.PNG){: width="100%", height="100%"}<br>
 
-![main](/assets/posts/2022-04-26-review-PTI/main.PNG){: width="100%", height="100%"}<br>
+![main](/assets/posts/face-editing/2022-04-26-review-PTI/main.PNG){: width="100%", height="100%"}<br>
 
 # Motivation
 Real image editing 을 위해서는 reconstruction 과 editing 둘 다 잘되어야 하는데 좋은 방법 없을까?
@@ -83,7 +83,7 @@ L_{pt} = \dfrac{1}{N} \sum_{i=1}^{N}(L_{LPIPS}(x_i, x_i^p) + \lambda_{L2}L_{L2}(
 \$$
 
 ### Additional loss term: Locality Regularzation
-![regularization](/assets//posts/2022-04-26-review-PTI/regularization.PNG){: width="100%", height="100%"}<br>
+![regularization](/assets//posts/face-editing/2022-04-26-review-PTI/regularization.PNG){: width="100%", height="100%"}<br>
 
 - Pivotal tuning 결과, $w_p$ 와 멀리 떨어진 non-local latent code 로 생성한 이미지들은 퀄리티가 나빴다.
 
@@ -105,7 +105,7 @@ $$
 L_{R} = L_{LPIPS}(x_r, x_r^*) + \lambda_{L2}^RL_{L2}(x_r, x_r^*)
 $$
 
-![vector](/assets//posts/2022-04-26-review-PTI/vector.png){: width="100%", height="100%"}
+![vector](/assets//posts/face-editing/2022-04-26-review-PTI/vector.png){: width="100%", height="100%"}
 
 > 어차피 real image 를 복원하고 편집하기 위해 PTI 를 사용하는데 왜 random sampled image 의 퀄리티까지 고려할까? PTI 과정 중에 latent space 가 변형되면 latent manipulation 을 위한 semantic direction vector 의 유효성이 떨어지기 떄문인거 같다.
 
@@ -125,11 +125,11 @@ $$
 
 - Encoder-based 방식(e4e)과 opimization-based 방식(SG2, SG2 W+)에 비해 detail 표현 능력이 뛰어나다.
 
-![recon](/assets//posts/2022-04-26-review-PTI/recon.PNG){: width="100%", height="100%"}<br>
+![recon](/assets//posts/face-editing/2022-04-26-review-PTI/recon.PNG){: width="100%", height="100%"}<br>
 
 - 다른 방법들에 비해 editing 능력도 뛰어나다 (+smile, +age, -beard)
 
-![editing](/assets//posts/2022-04-26-review-PTI/editing.PNG){: width="100%", height="100%"}<br>
+![editing](/assets//posts/face-editing/2022-04-26-review-PTI/editing.PNG){: width="100%", height="100%"}<br>
 
 # Conclusion
 - Short forward pass 를 위해서 PTI 를 근사하는 trainable mapper 가 필요함
