@@ -8,15 +8,13 @@ tags: [Deep Learning, GAN Inversion, PTI, Latent Manipulation]
 
 ![title](/assets/posts/face-editing/2022-04-26-review-PTI/title.PNG){: width="100%", height="100%"}<br>
 
-![main](/assets/posts/face-editing/2022-04-26-review-PTI/main.PNG){: width="100%", height="100%"}<br>
-
 # Motivation
 Real image editing 을 위해서는 reconstruction 과 editing 둘 다 잘되어야 하는데 좋은 방법 없을까?
 
 # Summary
 1. Generator 를 주어진 real image 에 finetuning 해서 reconstruction 성능을 끌어올린다. 
 
-2. Distortion-editability trade-off 를 극복함으로써 editing 성능을 유지한다. 
+2. Distortion-editability trade-off 를 극복함으로써 editing 성능도 놓치지 않는다. 
 
 3. Real imag editing 이 가능하며, multi images 도 pivotal tuning 가능하다.
 
@@ -31,13 +29,13 @@ Real image editing 을 위해서는 reconstruction 과 editing 둘 다 잘되어
 
 - 같은 W+ space 를 이용하더라도, encoder-based GAN inversion 보다 optimization-based GAN inversion 의 reconstruction 성능이 더 좋다. 하지만 editing 능력은 전자가 후자보다 더 낫다.
 
-> 이 문제를 distortion-editability trade-off 라고 부른다. W+ space 의 latent vetor 중에서도 W space 에 가까운 것일수록 editability 가 좋다. e4e 에서는 W+ latent space 의 latent vector 중에서도 W space 에 근접한 것들을 찾아내 reconstruction 과 editing 성능을 동시에 잡으려 했고, 이런 latent vector 를 sweetie-spot 라고 했다. 
+> Real image 에 대해 reconstruction 이 잘 되는 w vector 를 찾을수록 editing 능력이 떨어지는 현상을 보인다. 이 문제를 distortion-editability trade-off 라고 부른다. W+ space 의 latent vetor 중에서도 W space 에 가까운 것일수록 editability 가 좋다. e4e 에서는 W+ latent space 의 latent vector 중에서도 W space 에 근접한 것들을 찾아내 reconstruction 과 editing 성능을 동시에 잡으려 했고, 이런 latent vector 를 sweetie-spot 라고 했다. 
 
 
 ## Inversion
 - Inversion step 의 목적은 real image $x$ 에 대응하는 $w_p$ 를 찾는 것이다. 
 
-- 아래와 같은 Loss function 을 이용해 optimization 한다.   
+- 아래와 같은 Loss function 을 이용해 latent vector $w$ 를 optimization 한다. 즉 generator 에 $w$ 를 입력했을 때 $x$ 를 잘 복원하도록, $w$ 를 조금씩 수정하는 과정을 반복한다.
 
 $$
 w_p, n=\underset{w, n}{\operatorname{argmin}} \ L_{LPIPS}(x, G(w, n; \theta))+\lambda_nL_n(n))
