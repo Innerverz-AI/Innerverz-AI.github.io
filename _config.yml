@@ -1,5 +1,5 @@
 title: "Innerverz 기술 블로그"
-email: innerverz@gmail.com
+email: innerverz@innerverz.com
 timezone: UTC
 baseurl: ""
 permalink: "/:title/"
@@ -28,7 +28,7 @@ authors:
     name: 류원종
     display_name: 류원종
     avatar: 'assets/images/sal.png'
-    email: ""
+    email: "1zong2@innerverz.com"
     web: ""
     twitter: ""
     description: "류원종입니다."
@@ -62,3 +62,10 @@ plugins:
 - jekyll-feed
 - jekyll-seo-tag
 - jekyll-archives
+- jekyll-toc
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      toc: true

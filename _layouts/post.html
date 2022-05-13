@@ -9,7 +9,6 @@ post_class: post-template
 ================================================== -->
 
 	<div class="row">
-		
 
 		<!-- Post -->        
         {% assign author = site.authors[page.author] %}
@@ -42,7 +41,10 @@ post_class: post-template
 
 			<!-- Post Content -->
 			<div class="article-post serif-font">
-				{{content}}
+                
+                {{ content }}
+                
+
                 <div class="clearfix"></div>
 			</div>
 
@@ -109,7 +111,7 @@ post_class: post-template
 		<!-- Sidebar -->
         <div class="col-sm-4">
             {% include sidebar.html %}
-            </div>
+        </div>
         
         
 
