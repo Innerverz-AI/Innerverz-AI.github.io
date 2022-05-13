@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "[Paper Review] Barbershop: GAN-based Image Compusiting using Segmentation Masks"
-date:   2022-05-06
 author: 정정영
-tags: [Deep Learning, hairstyle transfer, StyleGAN]
+categories: [Deep Learning, Hairstyle Transfer, StyleGAN]
+image: assets/images/logo-hairstyle-transfer.jpeg
 ---
 
 ![Author](/assets/posts/hairstyle-transfer/barbershop/1.author.png)

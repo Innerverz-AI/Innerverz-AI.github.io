@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "[Paper Review] Face Editing 최신 논문 몰아보기: (1) Image2StyleGAN, Pixel2Style2Pixel"
-date:   2022-04-27
-author: 이유경 류원종
-tags: [Face Editing, GAN Inversion, StyleGAN] 
+author: 이유경
+categories: [Face Editing, GAN Inversion, StyleGAN]
+image: assets/images/logo-face-editing.jpeg
 ---
 
 우선 **face editing**에 대해 간단히 알아보자. 이 과정은 크게 세 단계로 이루어진다. 

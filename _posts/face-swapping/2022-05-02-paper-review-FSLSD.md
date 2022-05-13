@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "[Paper Review] FSLSD: High-resolution Face Swapping via Latent Semantics Disentanglement"
-date:   2022-05-02
 author: 류원종
-tags: [Deep Learning, Face Swapping, StyleGAN, Deep Fake]
+categories: [Deep Learning, Face Swapping, StyleGAN, Deep Fake]
+image: assets/images/logo-face-swapping.jpeg
 ---
 
 ![title](/assets/posts/face-swapping/FSLSD/title.PNG){: width="100%", height="100%"}<br>

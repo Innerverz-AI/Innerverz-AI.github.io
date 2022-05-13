@@ -1,23 +1,64 @@
-# Jekyll Defaults
-title: Innerverz 기술 블로그
-description: "이너버즈로 오세요."
-baseurl: "" # the subpath of your site, e.g. /blog
-
-url: "https://innerverz-ai.github.io"
-github: http://github.com/Innerverz-AI
-highlighter: rouge
+title: "Innerverz 기술 블로그"
+email: innerverz@gmail.com
+timezone: UTC
+baseurl: ""
+permalink: "/:title/"
+logo: 'assets/images/logo.png'
+favicon: 'assets/images/favicon.ico'
+author: 이유경
+paginate: 30
+disqus: 'invz-ai'
+locale: en_us
+lang: en_us
+feed_items: 10
+feed_update_period: daily
+feed_update_frequency: 1
 markdown: kramdown
-permalink: /post/:title/
-paginate: 4
-gems: [jekyll-paginate]
-paginate_path: "/page:num"
-rss_path: /feed.xml
-navigation:
-- text: About
-  url: /about/
-- text: Archives
-  url: /archives/
-- text: Tags
-  url: /tags/
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
+sass:
+  sass_dir: _sass
+  style: :compressed
+ganalytics: G-EB9PSDRL50
 
-plugins: [jekyll-paginate]
+# Authors
+authors:
+  류원종:
+    name: 류원종
+    display_name: 류원종
+    avatar: 'assets/images/sal.png'
+    email: ""
+    web: ""
+    twitter: ""
+    description: "류원종입니다."
+  정정영:
+    name: 정정영
+    display_name: 정정영
+    avatar: 'assets/images/john.png'
+    email: ""
+    web: ""
+    twitter: ""
+    description: "정정영입니다."
+  이유경:
+    name: 이유경
+    display_name: 이유경
+    avatar: 'assets/images/john.png'
+    email: "ukok828@gmail.com"
+    web: ""
+    twitter: ""
+    description: "이유경입니다."
+
+# Social
+social:
+  instagram: ""
+  facebook: ""
+  twitter: ""
+
+# Plugins
+plugins: 
+- jekyll-paginate
+- jekyll-sitemap
+- jekyll-feed
+- jekyll-seo-tag
+- jekyll-archives

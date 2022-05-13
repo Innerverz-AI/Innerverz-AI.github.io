@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "[Paper Review] PTI: Pivotal Tuning for Latent-based Editing of Real Images"
-date:   2022-04-26
 author: 류원종
-tags: [Deep Learning, GAN Inversion, PTI, Latent Manipulation]
+categories: [Deep Learning, GAN Inversion, PTI, Latent Manipulation]
+image: assets/images/logo-face-editing.jpeg
 ---
 
 ![title](/assets/posts/face-editing/2022-04-26-review-PTI/title.PNG){: width="100%", height="100%"}<br>
