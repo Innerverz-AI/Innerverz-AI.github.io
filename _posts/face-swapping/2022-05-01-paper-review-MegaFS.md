@@ -8,6 +8,8 @@ tags: [Deep Learning, Face Swapping, StyleGAN, Deep Fake]
 
 ![title](/assets/posts/face-swapping/MegaFS/title.PNG){: width="100%", height="100%"}<br>
 
+CVPR 2021 에 게재된 논문이다. StyleGAN 을 이용해 high-resolution face swapping 을 구현했다.
+
 # Motivation
 Face Swapping 기술이 좋긴한데 해상도가 너무 낮네?
 
