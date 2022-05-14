@@ -4,7 +4,6 @@ title:  "[Paper Review] MegaFS: One Shot Face Swapping on Megapixels"
 author: 류원종
 categories: [Deep Learning, Face Swapping, StyleGAN, Deep Fake]
 image: assets/images/logo-face-swapping.jpeg
-toc: true
 ---
 
 ![title](/assets/posts/face-swapping/MegaFS/title.PNG){: width="100%", height="100%"}<br>
