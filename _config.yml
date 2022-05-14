@@ -69,15 +69,3 @@ defaults:
       path: ""
     values:
       toc: true
-
-toc:
-ordered_list: true
-list_class: my-list-class
-sublist_class: my-sublist-class
-.my-list-class {
-  list-style-type: upper-alpha;
-}
-
-.my-sublist-class: {
-  list-style-type: lower-alpha;
-}
