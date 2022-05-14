@@ -3,7 +3,6 @@ layout: default
 disqus: false
 archive: false
 post_class: post-template
-toc: true
 ---
 
 <!-- Begin Article
@@ -106,18 +105,18 @@ toc: true
 		</div>
 		<!-- End Post -->
 		<!-- Sidebar -->
-        <!-- <div class="col-sm-4">
+        <div class="col-sm-4">
             <div class="sidebar sticky-top">
                 <div class="sidebar-section">
                     <h5><span>Table of Contents</span></h5>
-                    {{content | toc-only}}
+                    {{content | toc_only}}
                 </div>
             </div>
-        </div> -->
-		<!-- Sidebar -->
-        <div class="col-sm-4">
-            {% include toc.html %}
         </div>
+		<!-- Sidebar -->
+        <!-- <div class="col-sm-4">
+            {% include toc.html %}
+        </div> -->
 
 	</div>
 
