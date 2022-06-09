@@ -107,7 +107,7 @@ post_class: post-template
 		<!-- Sidebar -->
         <div class="col-sm-4">
             <h5><span>Table of Contents</span></h5>
-            {% toc %}
+            {{content | toc_only}}
         </div>
 
         <!-- <div class="col-sm-4">
