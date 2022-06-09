@@ -3,7 +3,7 @@ layout: post
 title:  "HyperStyle: StyleGAN Inversion with HyperNetworks for Real Image Editing"
 author: 정정영
 categories: [Deep Learning, Image editing, StyleGAN, Generator tuning]
-image: assets/images/logo-hairstyle-transfer.jpeg
+image: assets/images/logo-face-editing.jpeg
 ---
 ![Author](/assets/posts/hairstyle-transfer/hyperstyle/1.authors.png){: width="600" height="100"}
 

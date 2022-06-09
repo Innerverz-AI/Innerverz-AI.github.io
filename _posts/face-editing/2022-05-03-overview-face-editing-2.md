@@ -4,6 +4,7 @@ title:  "[Paper Review] Face Editing 최신 논문 몰아보기: (2) Encoder4Edi
 date:   2022-05-03
 author: 이유경 류원종
 tags: [Face Editing, GAN Inversion, Latent Space, StyleGAN] 
+image: assets/images/logo-face-editing.jpeg
 ---
 
 이전 포스트에서 주어진 이미지를 잘 복원하는 조건과 내가 원하는대로 잘 수정하는 조건에 대해 언급했다. 시리즈의 첫번째 포스트을 아직 읽지 않았다면 먼저 읽고 오는 것을 추천한다. 오늘 다룰 내용을 이해하는데 중요한 개념이니 다시 한 번 정리해보자.  
