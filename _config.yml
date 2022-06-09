@@ -1,3 +1,7 @@
+---
+google-site-verification: rX9SzhsZ6eK62hp63J-bxZfQt7GAwJqtWnyKkokHHkU
+---
+
 title: "Innerverz AI Blog"
 email: innerverz@innerverz.com
 timezone: UTC
@@ -62,5 +66,3 @@ plugins:
 - jekyll-feed
 - jekyll-seo-tag
 - jekyll-archives
-
-google-site-verification: rX9SzhsZ6eK62hp63J-bxZfQt7GAwJqtWnyKkokHHkU
