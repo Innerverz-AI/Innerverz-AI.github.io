@@ -63,6 +63,7 @@ plugins:
 - jekyll-seo-tag
 - jekyll-archives
 - jekyll-toc
+- jekyll-include-cache
 
 defaults:
   - scope:
