@@ -62,12 +62,4 @@ plugins:
 - jekyll-feed
 - jekyll-seo-tag
 - jekyll-archives
-- jekyll-toc
-- jekyll-include-cache
 
-defaults:
-  - scope:
-      path: ""
-    values:
-      toc: true
-      toc_sticky: true

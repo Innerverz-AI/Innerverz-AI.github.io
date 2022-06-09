@@ -20,6 +20,4 @@ group :jekyll_plugins do
     gem 'jekyll-archives'
     gem 'tzinfo-data'
     gem 'tzinfo'
-    gem 'jekyll-toc'
-    gem "jekyll-include-cache"
 end
