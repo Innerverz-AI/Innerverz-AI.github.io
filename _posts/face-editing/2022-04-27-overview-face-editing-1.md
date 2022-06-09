@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Paper Review] Face Editing 최신 논문 몰아보기: (1) Image2StyleGAN, Pixel2Style2Pixel"
+title:  "[Survey] Face Editing 최신 논문 몰아보기: (1) Image2StyleGAN, Pixel2Style2Pixel"
 author: 이유경
 categories: [Face Editing, GAN Inversion, StyleGAN]
 image: assets/images/logo-face-editing.jpeg
