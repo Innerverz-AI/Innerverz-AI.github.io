@@ -12,6 +12,7 @@
 
 [Wav2Lip](https://innerverz-ai.github.io/)
 [LipGAN](https://innerverz-ai.github.io/)
+[PC-AVS](https://innerverz-ai.github.io/review-pc-avs/)
 
 ## Face Editing
 
