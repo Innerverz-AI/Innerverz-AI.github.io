@@ -3,7 +3,7 @@ layout: post
 title:  "[Paper Review] OASIS : You only need adversarial supervision for semantic image synthesis"
 author: 정정영
 categories: [Deep Learning, Spatially-Adaptive Normalization, OASIS, face-design]
-image: 
+image: assets/images/logos-face-design2.png
 ---
 
 ![Author](/assets/posts/face-design/OASIS/1.author.png)
@@ -21,32 +21,32 @@ Semantic image를 이용하여 realistic image를 생성하는 방법은 SPADE�
 # 3. Method
 ![OASIS](/assets/posts/face-design/OASIS/2.OASIS.png){: width="100%", height="100%"}<br>
 ## 3.1 The SPADE baseline
-SPADE에서 sematic label map을 input으로 받는 spatially-adaptive normalization layer를 synthesis process 곳곳 적용하였다. 그렇게 원하는 영역에 label에 해당하는 물체를 생성할 수 있었다. 또한 SPADE에 스타일을 추출하는 encoder를 추가하면 원하는 스타일을 semantic label map의 region에 적용이 가능하였다.(multi-modal synthesis)    
+SPADE에서는 sematic label map을 input으로 받는 spatially-adaptive normalization layer를 synthesis process에 적용하였다. 또한 SPADE에 스타일을 추출하는 encoder를 추가하면 원하는 스타일을 semantic label map의 region에 적용이 가능하였다.(multi-modal synthesis)    
 
 본 논문은 SPADE architecture를 수정하고 새로운 discriminator를 소개하여 SPADE보다 나은 성능을 보였다.  
 
 
 ## 3.2 OASIS discriminator
-SPADE에서 discriminator는 PatchGAN의 multi-scale discriminator를 사용하였다. SPADE discriminator는 입력으로 rgb image와 semantic label map을 입력으로 받고 단순하게 real/fake를 구분하였다. 이는 결과적으로 semantic label map의 정보를 무시하거나 realism이 부족한 결과를 가져왔다.  
- 그래서 OASIS는 encoder-decoder segmentation network를 만들었다. 이 network는 U-Net architecture와 비슷하며 input으로 rgb image를 받고 결과로 semantic image를 생성한다. Encoder-decoder 형식의 network로 생성된 semantic image와 semantic label map을 비교하여 SPADE discriminator의 문제점을 해결하고자 하였다.
+SPADE에서 discriminator는 PatchGAN의 multi-scale discriminator를 사용하였다. 이는 결과적으로 semantic label map의 정보를 무시하거나 realism이 부족한 결과를 가져왔다.  
+그래서 OASIS는 encoder-decoder segmentation network를 만들었다. 이 network는 U-Net architecture와 비슷하며 input으로 rgb image를 받고 결과로 semantic image를 생성한다.  
+Encoder-decoder 형식의 network로 생성된 semantic image와 semantic label map을 비교하여 SPADE discriminator의 문제점을 해결하고자 하였다.
 
 ### Formuler
 Semantic label map을 ground true로 정한다. 이 semantic label map은 N개의 label을 가지고 있다고 가정한다. fake image를 OASIS discriminator의 input으로 넣어 N + 1개 class로 분류된 semantic map을 얻는다. (1개 class가 추가된 이유는 class에 없는 index pixel은 extra class로 지정하였기 때문이다.)  
 
-이미지는 보통 N class가 골고루 존재하지 않는다. 이런 점을 감안하여 각 semantic classes 마다 per-pixel size에 따라 다른 weight를 곱하도록 하였다.(드물게 나타나는 class에 대해 높은 weight를 부여하여 학습하였다.) 이렇게 모든 class에 대해 balanced를 유지하게 하였고, generator가 적게 나타나는 class에 대해서도 잘 생성할 수 있도록 하였다.  
+이미지는 보통 N class가 골고루 존재하지 않는다. 이런 점을 감안하여 각 semantic classes 마다 per-pixel size에 따라 다른 weight를 곱하도록 하였다.(드물게 나타나는 class에 대해 높은 weight를 부여하여 학습하였다.) 결과적으로 generator가 적게 나타나는 class에 대해서도 잘 생성하게 되었다.  
 
 #### Discriminator loss
-$
-L_{D} = -\mathbb{E}_{(x,t)} \left [ \sum^{N}_{c=1} \alpha_{c} \sum^{H*W}_{i,j} t_{i,j,c}logD(x)_{i,j,c} \right ] - \mathbb{E}_{(z,t)}\left [ \sum^{H*W}_{i,j} logD(G(z,t))_{i,j,c=N+1} \right]
-$
+
+![discriminator_loss](/assets/posts/face-design/OASIS/discriminator_loss.svg)
+
 > - x : real image  
 > - (z,t) : noise-label map pair  
 > - t : ground truth label map(three dimension)  
 
 추가로 weight c는 다음과 같이 계산된다.
-$
-\alpha_{c} = \frac{H x W}{\sum^{H*W}_{i,j} E_{t}[\mathbb{I}[t_{i,j,c} = 1]]}
-$
+
+![weight_c](/assets/posts/face-design/OASIS/weightc.svg)
 
 ### LabelMix regularization
 real image와 fake image간 content와 structure 차이를 discriminator가 잘 구분하도록 하기 위해서 LabelMix regularization을 제안한다.  
@@ -62,19 +62,18 @@ $$
 > - 만들어진 $LableMix_{(x,\hat{x})}$ 를 discriminator에 넣어줘서 semantic map을 얻는다.  
 > - discriminator를 통해 얻은 semantic map($D_{LableMix_{(x,\hat{x})}}$)과 $LabelMix_{(D_{x},D_{\hat{x}})}$ 간 L2 loss를 계산하여 최소화 하도록 discriminator를 학습하였다.  
 
-style을 섞을 이미지가 주어지면 LabelMix operation을 잘 수행하도록 discriminator를 학습시키기 위해서 밑의 $\textit{L}_{cons}$ 를 추가하였다.
-$$
-\textit{L}_{cons} = \left\| D_{logits}(LabelMix(x,\hat{x},M)) - LabelMix(D_{logits}(x),D_{logits}(\hat{x}),M)) \right\|^{2}
-$$
+style을 섞을 이미지가 주어지면 LabelMix operation을 잘 수행하도록 discriminator를 학습시키기 위해서 밑의 $\textit{L}_{cons}$ 를 추가하였다.  
+
+![cons_loss](/assets/posts/face-design/OASIS/cons_loss.svg)
+
 
 LabelMix regularization을 적용하면 generator가 이미지를 생성할 때 pixel-level로 사실적이게 생성하도록 하며, 자연스러운 semantic boundaries를 얻는 방향으로 학습하게 된다고 한다.
 
 ## 3.3 OASIS generator
 OASIS discriminator design을 적용한 새롭게 바뀐 generator의 loss를 다음과 같다.
 
-$
-L_{D} = -\mathbb{E}_{(z,t)} \left [ \sum^{N}_{c=1} \alpha_{c} \sum^{H*W}_{i,j} t_{i,j,c}logD(G(z,t))_{i,j,c} \right ]
-$
+![d_loss](/assets/posts/face-design/OASIS/d_loss.svg)
+
 
 > - z : noise tensor(64 * H * W)
 > - t : label map(H*W)

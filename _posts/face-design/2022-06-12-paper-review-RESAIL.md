@@ -3,11 +3,11 @@ layout: post
 title:  "[Paper Review] RESAIL : Retrieval-based Spatially Adaptive Normalization for Semantic Image Synthesis"
 author: 정정영
 categories: [Deep Learning, Spatially-Adaptive Normalization, Retrieval-based, face-design]
-image: 
+image: assets/images/logos-face-design2.png
 ---
 ![Author](/assets/posts/face-design/RESAIL/1.author.png)
 
-![result_gird](/assets/posts/face-design/RESAIL/2.result_gird.png)
+![result_gird](/assets/posts/face-design/RESAIL/2.result_gird.png){: width="100%", height="100%"}<br>  
 
 
 # 1. Contributions
@@ -17,7 +17,7 @@ image:
 - distorted content patch로 만든 guidance image를 가지고 model을 학습하였다.
 
 # 2. Method
-![result_gird](/assets/posts/face-design/RESAIL/3.method.png)  
+![result_gird](/assets/posts/face-design/RESAIL/3.method.png){: width="100%", height="100%"}<br>  
 전체적인 과정을 살펴보자면,
 1. semantic map을 retrieval paradigm로 보내 guidance image $I^{r}$ 을 얻어낸다.
 2. guidance image과 semantic map을 Retrieval-based Spatially Adaptive Normalization(RESAIL) 을 이용한 generator에 통과시켜 최종 이미지 $\hat{I}$ 를 얻는다.
@@ -25,23 +25,24 @@ image:
 ## 2.1. Retrieval-based Guidance
 retrieval function(retrieval paradigm) 안에서 어떤 과정을 거치는지 알아본다.(Fig. 2(a) 참조)  
 
-1. Semantic map M을 object별로 분해하여 mask를 만든다.
-$$
-M = {(M^{s}_{i}, y^{c}_{i})}
-$$
-> - $M^{s}_{i}$ : 한 object를 crop 한 binary segment mask  
-> - $y^{c}_{i}$ : $M^{s}_{i}$ 에 대응하는 category
+1. Semantic map M을 object별로 분해하여 mask를 만든다.  
+
+    ![M](/assets/posts/face-design/RESAIL/M.svg)
+
+    > - $M^{s}_{i}$ : 한 object를 crop 한 binary segment mask  
+    > - $y^{c}_{i}$ : M mask에 대응하는 category
 
 2. training images는 1번 과정 처럼 semantic map 정보를 이용하여 object들을 training image에서 분리한다.  
 (분리된 object들은 retrieval unit이라 한다.)
 3. semantic map M에서 나온 object별 mask와 training image에서 나온 object별 mask가 비슷하게 일치하는 경우 Retrieved Segments로 정한다.
 4. Retriebed Segments들을 재조합하여 guidance image $I^{r}$ 를 얻는다.
 
-retrieval-based guidance($I^{r}$)는 아래 식으로 얻어진다.
-$$
-I^{r} = \Theta({\Gamma (D^{tr},M^{s}_{i},y^{c}_{i}) | (M^{s}_{i},y^{c}_{i})  \in  M }) 
-$$
-> - $\Gamma (D^{tr},M^{s}_{i},y^{c}_{i})$ : training dataset($D^{tr}$) 에서 진행하는 retrieval function을 의미.
+retrieval-based guidance($I^{r}$)는 아래 식으로 얻어진다.  
+
+![guidance_image](/assets/posts/face-design/RESAIL/guidance_image.svg)
+
+
+> - Γ(D,M,y): training dataset에서 진행하는 retrieval function을 의미.
 > - $M^{s}_{i}$ : mask와 가장 비슷한 모습을 가진 object의 segment image  
 (만약 비슷한 object가 없으면 검은색으로 칠한다. 또한 빈 영역이 발생하면 그 부분을 검은색으로 칠한다.)
 > - $\Theta$ : dataset에서 찾은 object의 segment image들을 재조합
@@ -95,18 +96,15 @@ $ \hat{I} = G(M, I^{r}), \hat{I}^{gt} = G(M, \hat{I}^{gt}) $
 
 ## 2.4. Loss functions
 
-$ 
-\mathbb{L} = \lambda_{vgg}\mathbb{L}_{vgg} + \lambda_{fm}\mathbb{L}_{fm} + \lambda_{adv}\mathbb{L}_{adv} + \lambda_{cls}\mathbb{L}_{cls}
-$
+![loss](/assets/posts/face-design/RESAIL/loss.svg)
 
-> - $\hat{I}^{gt}$, ${I}^{gt}$ 간에 perceptual loss $\mathbb{L}_{vgg}$ 과 feature matching loss  $\mathbb{L}_{fm}$ 을 적용하였다.
+> - $\hat{I}^{gt}$, ${I}^{gt}$ 간에 perceptual loss와 feature matching loss를 적용하였다.
 > - $\hat{I}^{gt}$, $\hat{I}$ 을 사실적으로 만들기 위해 adversial loss를 걸어주었다.
 
 ### $ \mathbb{L}_{cls}$
-각 semantic region에 synthesis를 잘 하기 위해 만든 segmentation loss이다. pretrained segmentation network S를 이용하여 생성된 이미지를 semantic image로 만들었다. 그리고 segmentation mask M과 비교하여 loss를 계산한다.
-$
-\mathbb{L}_{cls} = -\mathbb{E}_{M}\left [ \sum_{c}\alpha_{c} \sum_{i,j}M_{i,j,c} logS(\hat{I})_{i,j,c} \right ]
-$
+각 semantic region에 synthesis를 잘 하기 위해 만든 segmentation loss이다. pretrained segmentation network S를 이용하여 생성된 이미지를 semantic image로 만들었다. 그리고 segmentation mask M과 비교하여 loss를 계산한다.  
+![cls_loss](/assets/posts/face-design/RESAIL/cls_loss.svg)
+
 > - $\alpha_{c}$ : class balancing weight
 
 # 3. Experiments
@@ -124,15 +122,15 @@ $
 - FID
 
 ## 3.2. Qualitative Results
-![qualitative_results](/assets/posts/face-design/RESAIL/4.qualitative_results.png)  
+![qualitative_results](/assets/posts/face-design/RESAIL/4.qualitative_results.png){: width="100%", height="100%"}<br>  
 
 - RESAIL model 결과물이 더 사실적이며, 물체의 구조적 특징도 잘 반영된 결과가 나왔다.
 
 ### Multi-modal synthesis capability
-![multi_modal_test](/assets/posts/face-design/RESAIL/5.multi_modal_test.png)  
+![multi_modal_test](/assets/posts/face-design/RESAIL/5.multi_modal_test.png){: width="100%", height="100%"}<br>   
 
 ## 3.3. Quantitative Results
-![quantitative_result](/assets/posts/face-design/RESAIL/6.quantitative_result.png)  
+![quantitative_result](/assets/posts/face-design/RESAIL/6.quantitative_result.png)   
 
 - 거의 모든 dataset에서 RESAIL이 좋은 결과를 보인다.
 
