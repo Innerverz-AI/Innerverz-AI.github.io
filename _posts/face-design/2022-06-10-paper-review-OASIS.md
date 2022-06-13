@@ -71,9 +71,11 @@ LabelMix regularization을 적용하면 generator가 이미지를 생성할 때 
 
 ## 3.3 OASIS generator
 OASIS discriminator design을 적용한 새롭게 바뀐 generator의 loss를 다음과 같다.
+
 $
 L_{D} = -\mathbb{E}_{(z,t)} \left [ \sum^{N}_{c=1} \alpha_{c} \sum^{H*W}_{i,j} t_{i,j,c}logD(G(z,t))_{i,j,c} \right ]
 $
+
 > - z : noise tensor(64 * H * W)
 > - t : label map(H*W)
 
