@@ -109,17 +109,25 @@ $$ L = \sum_{r\in \mathbb{R}}^{}[\left\|\hat{C}_c(\textbf{r}) - C(\textbf{r}) \r
 
 ![result-table1](/assets/posts/3d-rendering/nerf/result-table1.png)
 
+여러 Synthetic & real dataset에 대해 PSNR, SSIM, LPIPS의 metric으로 평가해본 결과이다. 각 Dataset은 geometrically complex scenes를 포함하고 있다. Real Forward-Facing scene에서는 LLFF method의 LPIPS 성능이 다소 높게 나왔으나, 정성적인 결과는 NeRF가 더 우수한 것을 확인할 수 있었다.
+
 #### Qualitative results
 
 ![result-fig1](/assets/posts/3d-rendering/nerf/result-fig1.png)
 ![result-fig2](/assets/posts/3d-rendering/nerf/result-fig2.png)
+
+Synthetic dataset에 있는 각 objects에 대해 novel view synthesis를 해본 결과 이미지이다. 저자는 LLFF나 SRN 방법을 활용한 결과에 대해 다소 blurry, banding artifacts, ghosting artifacts등 High quality image를 합성하기는 부족했다고 평가한다. 그러나, NeRF의 방법으로는 Ground Truth와 근접한 이미지를 만들어 낼 수 있음을 그림을 통해 보였다.
+
 ![result-fig3](/assets/posts/3d-rendering/nerf/result-fig3.png)
 ![result-fig4](/assets/posts/3d-rendering/nerf/result-fig4.png)
-![result-fig5](/assets/posts/3d-rendering/nerf/result-fig5.png)
+
+Real world scenes가 포함된 Dataset에 대해 novel view synthesis를 해본 결과 이미지이다. 저자는 LLFF, SRN 방법을 활용한 결과 이미지에 대한 not clean, repeated edges, not fine detail함을 지적하고 있다.
 
 ### Ablation studies
 
 ![result-table2](/assets/posts/3d-rendering/nerf/result-table2.png)
+
+1) ~ 9) case까지 여러 Hyperparameters와 실험 세팅을 조절하며 정량적인 평가를 내린 표이다. 가로축 차례대로, 입력 차원, 이미지 개수, Positional Encoding Frequency 파라미터, 샘플링 파라미터를 의미하고, 세로축으로는 각각 실험한 세팅 환경을 의미한다. 제안한 모든 요소를 포함시켰을 때, 성능이 가장 뛰어난 것을 확인할 수 있다.
 
 # Conclusion
 
