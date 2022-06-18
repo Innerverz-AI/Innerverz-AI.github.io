@@ -31,10 +31,10 @@ SPADE에서 discriminator는 PatchGAN의 multi-scale discriminator를 사용하�
 그래서 OASIS는 encoder-decoder segmentation network를 만들었다. 이 network는 U-Net architecture와 비슷하며 input으로 rgb image를 받고 결과로 semantic image를 생성한다.  
 Encoder-decoder 형식의 network로 생성된 semantic image와 semantic label map을 비교하여 SPADE discriminator의 문제점을 해결하고자 하였다.
 
-### Formuler
-Semantic label map을 ground true로 정한다. 이 semantic label map은 N개의 label을 가지고 있다고 가정한다. fake image를 OASIS discriminator의 input으로 넣어 N + 1개 class로 분류된 semantic map을 얻는다. (1개 class가 추가된 이유는 class에 없는 index pixel은 extra class로 지정하였기 때문이다.)  
+### Formular
+Semantic label map을 ground trues로 정한다. 이 semantic label map은 N개의 label을 가지고 있다고 가정한다. fake image를 OASIS discriminator의 input으로 넣어 N + 1개 class로 분류된 semantic map을 얻는다. (1개 class가 추가된 이유는 class에 없는 index pixel은 extra class로 지정하였기 때문이다.)  
 
-이미지는 보통 N class가 골고루 존재하지 않는다. 이런 점을 감안하여 각 semantic classes 마다 per-pixel size에 따라 다른 weight를 곱하도록 하였다.(드물게 나타나는 class에 대해 높은 weight를 부여하여 학습하였다.) 결과적으로 generator가 적게 나타나는 class에 대해서도 잘 생성하게 되었다.  
+이미지는 보통 N class가 골고루 존재하지 않는다. 이런 점을 감안하여 각 semantic classes 마다 per-pixel size에 따라 다른 weight를 곱하도록 하였다.(드물게 나타나는 class에 대해 높은 weight를 부여하여 학습하였다.) 결과적으로 적게 나타나는 class에 대해서도 generator가 잘 표현하게 되었다.  
 
 #### Discriminator loss
 
@@ -43,10 +43,6 @@ Semantic label map을 ground true로 정한다. 이 semantic label map은 N개�
 > - x : real image  
 > - (z,t) : noise-label map pair  
 > - t : ground truth label map(three dimension)  
-
-추가로 weight c는 다음과 같이 계산된다.
-
-![weight_c](/assets/posts/face-design/OASIS/weightc.svg)
 
 ### LabelMix regularization
 real image와 fake image간 content와 structure 차이를 discriminator가 잘 구분하도록 하기 위해서 LabelMix regularization을 제안한다.  
@@ -70,19 +66,26 @@ style을 섞을 이미지가 주어지면 LabelMix operation을 잘 수행하도
 LabelMix regularization을 적용하면 generator가 이미지를 생성할 때 pixel-level로 사실적이게 생성하도록 하며, 자연스러운 semantic boundaries를 얻는 방향으로 학습하게 된다고 한다.
 
 ## 3.3 OASIS generator
-OASIS discriminator design을 적용한 새롭게 바뀐 generator의 loss를 다음과 같다.
+OASIS discriminator design을 적용한 새롭게 바뀐 generator loss는 다음과 같다.
 
-![d_loss](/assets/posts/face-design/OASIS/d_loss.svg)
+![g_loss](/assets/posts/face-design/OASIS/g_loss.svg)
 
 
 > - z : noise tensor(64 * H * W)
-> - t : label map(H*W)
+> - t : label map(H * W * c)  
+> discriminator로 생성된 fake semantic map과 label sementic map 간 서로 일치하는 영역이 많도록 해주는 loss다. 
 
 generator에 z와 t를 channel-wise concatenation한 tensor를 input으로 넣어준다.(65 * H * W) 이 concatenation한 tensor는 generator의 각 spatially-adaptive normalization layer에도 넣어준다. 이러한 구조로 인하여 generator는 noise-dependent image를 생성하게 된다. 
 
 generator가 noise-dependent image를 생성하기 때문에 해당 class영역의 noise값을 다른 값으로 바꾸면 원하는 영역만 다른 스타일로 변경된 사진을 얻을 수 있다. 
 
 OASIS generator와 SPADE genrator간 다른 점을 소개하자면 네트워크 복잡도를 줄이기 위해서 OASIS는 SPADE generator의 첫번째 residual block를 제거하였다. 이로써 96M개 parameters를 72M개 까지 줄이게 되었다.
+
+#### class balancing wieght 
+
+![weight_c](/assets/posts/face-design/OASIS/weightc.svg)
+
+> 이미지 전체 픽셀에서 class에 해당하는 픽셀 수를 역수한 값이 $\alpha_{c}$ 가 된다.
 
 
 # 4. Experiments
@@ -99,6 +102,8 @@ OASIS generator와 SPADE genrator간 다른 점을 소개하자면 네트워크 
 
 ### Multi-modal image synthesis
 ![multi-modal_synthesis](/assets/posts/face-design/OASIS/6.multi-modal_synthesis.png){: width="100%", height="100%"}<br>
+- OASIS는 3D noise와 semantic image를 input으로 사용하고 있다. 그래서 noise를 어떻게 적용하느냐에 따라 다른 결과물을 얻을 수 있다.
+- 이미지를 생성할 때 마다 다른 noise를 사용해주는 경우(1,2 rows), 특정 물체 영역만 다른 noise를 사용하는 경우(3 row), 영역을 기준으로 서로 다른 noise를 사용하는 경우(4 row) 모두 다르게 생성된다.
 
 # 5. Conclusion
 - OASIS를 이용하여 좋은 퀄리티로 image synthesis를 수행할 수 있다.
