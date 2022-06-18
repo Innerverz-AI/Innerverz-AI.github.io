@@ -19,16 +19,16 @@ image: assets/images/logo-hairstyle-transfer.jpeg
 - image composition 은 N 장의 reference image 에서 필요한 영역을 가져와 합치는 방법이다.
 
 - image composition 은 난이도가 높은데, 다음과 같은 어려움들이 있다. 
-    1) 이미지 속 요소들이 서로 독립적이지 않다는 점
-    2) hair color 는 조명, 반사광, 주변 색상에 영향을 받는다는 점
-    3) hair style 이 바뀌면서 가려져 있던 요소들(귀, 이마, 턱선 등)이 드러난다는 점
-    4) hair shape 은 구도에 따라 다르게 보일 수 있다는 점
+    1) 이미지 속 요소들이 서로 독립적이지 않다는 점  
+    2) hair color 는 조명, 반사광, 주변 색상에 영향을 받는다는 점  
+    3) hair style 이 바뀌면서 가려져 있던 요소들(귀, 이마, 턱선 등)이 드러난다는 점  
+    4) hair shape 은 구도에 따라 다르게 보일 수 있다는 점  
 
 - 이 논문에서는 이미지 한 장에 대해 다음과 같은 4가지 속성을 정의한다.
-    1) apperance: fine details (such as hair colors)
-    2) structure: coarser features (such as form of locks of hair) 
-    3) shape: binary segmentation regions
-    4) identity: all the features required to identify an individual
+    1) apperance: fine details (such as hair colors)  
+    2) structure: coarser features (such as form of locks of hair)   
+    3) shape: binary segmentation regions  
+    4) identity: all the features required to identify an individual  
    
 - 서로 다른 이미지에서 위 속성을 하나씩 가져올 때, 최대 4장의 이미지를 하나로 합칠 수 있다. 
 
@@ -71,9 +71,9 @@ image: assets/images/logo-hairstyle-transfer.jpeg
 ## 3-3. Embedding
 
 - 이미지를 합치기 전에, 각 이미지들을 M에 맞춰 align 해야 한다. 
-- 다음과 같은 두 파트로 나뉜다. 
-	1) $I_k$ 를 표현하는 $C_k^{rec}$ 를 찾는 reconstruction 과 
-    2) $C_k^{rec}$ 의 근처에서 M 에 대응되는 $C_k^{align}$ 을 찾는 alignment  
+- 다음과 같은 두 파트로 나뉜다.  
+	1) $I_k$ 를 표현하는 $C_k^{rec}$ 를 찾는 reconstruction 과   
+    2) $C_k^{rec}$ 의 근처에서 M 에 대응되는 $C_k^{align}$ 을 찾는 alignment    
 
 ### 3-3-1. Reconstruction
 
@@ -128,12 +128,14 @@ $$
 - reconstructed image에 hair structure을 transfer하는 과정이다.
 -  target image의 F latent vector 중 target mask의 머리에 해당하는 영역만 reference image의 F latent vector로 교체한다. 
 
-- binary mask를 이용하여 structure를 가져온다.
+- binary mask를 이용하여 structure를 가져온다.  
+
 $$
 \alpha_{k}(x,y) = 1*{M(x,y) = k}
 $$
+
 $$
-\beta_{k}(x,y) = 1*{M_{k}(x,y) = k}
+\beta _{k}(x,y) = 1*{M _{k}(x,y) = k}
 $$
 
 >
@@ -150,27 +152,33 @@ $$
 - structure transfer하는 영역은 target mask M과 reference mask $M_{k}$의 바꿀 얼굴 영역이 겹치는 부분으로 한정된다.
 
 ## 3-4. Structure Blending
-- blended image를 생성하기 위해 $C^{align}_{k}$의 structure tensor($F^{align}_{k}$)를 섞는 방식으로 진행한다.
-$$
-F^{blend} = \sum_{k=1}^{K}\alpha_{k,m}\bigodot F^{align}_{k}
-$$
+- blended image를 생성하기 위해 $C^{align} _{k}$의 structure tensor($F^{align} _{k}$)를 섞는 방식으로 진행한다.  
 - 각 structure tensor들의 영역을 weights($\alpha_{k,m}$)만큼 섞어준다.
+
+
+$$
+F^{blend} = \sum _{k=1}^{K}\alpha _{k,m}\bigodot F^{align} _{k}
+$$
 
 ## 3-5. Appearance Blending
 - reference codes $S_{k}(k=1,...,K)$를 조합하여 style code $S^{blend}$를 찾는 방식이다.
 
 - 먼저 각 reference image의 style code$S_{k}(k=1,...,K)$를 찾기 위해 optimize 한다. optimize할 때 loss는 *masked version of LPIPS*를 이용하여 최적화를 진행하였다.
-- 기존 LPIPS를 구하는 식에서 loss를 계산할 영역을 정한 mask($\alpha_{k,l}$)를 추가하였다.
+- 기존 LPIPS를 구하는 식에서 loss를 계산할 영역을 정한 mask($\alpha_{k,l}$)를 추가하였다. 
+
 $$
-L^{mask}=\sum_{kl}\alpha_{k,l}L_{PIPS}
+L^{mask}=\sum _{kl}\alpha _{k,l}L _{PIPS}
 $$
 
-- k개 style code를 얻었으면 Blending하여style code($S^{blend}$)로 만들어야 한다.
+
+- k개 style code를 얻었으면 Blending하여style code($S^{blend}$)로 만들어야 한다.  
+
 $$
-S^{blend} = \sum_{k}u_{k}\bigodot S_{k}
+S^{blend} = \sum _{k}u _{k}\bigodot S _{k}
 $$
+  
 $$
-\sum_{k}u_{k} = 1 (u_{k} \geq 0)
+\sum_{k}u _{k} = 1 (u _{k} \geq 0)
 $$
 
 - Structure blending과 비슷하게 weight($u_{k}$)를 이용하여 $S_{K}$를 섞어준다.
@@ -205,7 +213,7 @@ $$
 - w/o Align
 Align 하지 않아서 머리와 얼굴이 잘 조합되지 않는다. 또한 머리 영역 가장자리에 아티펙트가 보인다.
 
-- using $F^{rec}_{k}$ rather then $F^{align}_{k}$ when blending
+- using $F^{rec} _{k}$ rather then $F^{align} _{k}$ when blending
 original image의 detail한 부분까지 재현 가능하였다. 그러나 semantic alignment 부분이 부족하였다.
 
 - W+ vs FS latent space

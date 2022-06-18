@@ -43,20 +43,20 @@ encoder를 이용하여 latent vector를 단시간에 얻을 수 있는 장점�
 - x : input image   
 - G : Generator
 - $\theta$ : generator's parameter
-- $ \hat{w}_{init} $ : E(x) (using off-the-shelf encoder, e4e)
-- $ \hat{y}_{init} $ : $G(\hat{W}_{init};\theta)$
+- $ \hat{w}_{init} $ : E(x) (using off-the-shelf encoder, e4e)  
+- ![hat_y](/assets/posts/hairstyle-transfer/hyperstyle/hat_y.svg)
 
 ### Step
 HyperStyle은 input image의 identity를 유지하기 위해서 generator를 fine tuning하는 것이 main idea다. 
-1. x, $ G(\theta) $,  $ \hat{w}_{init} $ 을 준비한다.  
-( $ \hat{w}_{init} $ 를 구하는 과정은 생략한다.)
+1. x, $ G(\theta), \hat{w}_{init} $ 을 준비한다.  
 2. Figure 2의 Pre-trained Generator( $G(\theta)$ )에 $ \hat{w}_{init} $ 을 입력하여 $ \hat{y} $ 을 얻는다.
 3. x와 $ \hat{y} $ 를 비교하여 loss를 계산한다.
 4. Hypernetwork(H)가 offset(= $\Delta$)를 계산하고 generator를 modified 한다.
 5. Modified Generator($G(\hat{\theta})$)를 가지고 2~4 번을 반복한다.
-6. fine tuning된 Generator를 얻는다.
+6. fine tuning된 Generator를 얻는다.  
 
-generator's parameter를 수정할 offset을 생성하는 H를 자세히 살펴본다.
+( $ \hat{w}_{init} $ 를 구하는 과정은 생략한다.)  
+generator's parameter를 수정할 offset을 생성하는 H를 자세히 살펴본다.  
 
 ## Hypernetwork(H)
 input은 6-channel input (x, $\hat{y}_{init}$ )이나 (x, $ \hat{y} $) 을 받고 output으로 offset(= $\Delta$)을 내보낸다.
@@ -64,7 +64,8 @@ input은 6-channel input (x, $\hat{y}_{init}$ )이나 (x, $ \hat{y} $) 을 받�
 H의 구성인 ResNet Backbone과 Refinement Block을 통해 generator tuning할 offset이 나오게 된다.  
 
 저자들은 weight tuning시 다음과 같은 식으로 5번 진행한다.(Restyle에서 소개된 방식)    
-$\hat{\theta}_{l,t} := \theta *(1 + \sum^{t}_{i=1}\Delta_{l,i})$
+
+![weight_tuning](/assets/posts/hairstyle-transfer/hyperstyle/weight_tuning.svg)
 
 논문에는 StyleGAN2를 generator로 선택하였는데 3.07B에 달하는 generator parameter의 offset을 계산하기에는 시간이 많이 소모된다. 이를 해결하기 위해 저자들은 다음과 같은 전략을 사용하였다.
 
@@ -74,10 +75,13 @@ $\hat{\theta}_{l,t} := \theta *(1 + \sum^{t}_{i=1}\Delta_{l,i})$
 
 이 offset 값들은 single generator layer의 Conv layer weight를 modulation해줄 값이다. 픽셀별로 Conv layer weight를 학습하기에는 parameter 수가 너무 많으므로 channel-wise로 modulation 한다.
 
-l번째 레이어 parameters $\theta_{l}$ 에 offset을 적용한다고 가정한다. 원래 l번째 레이어에는 $k_{l} * k_{l} * C^{in}_{l} * C^{out}_{l}$ 사이즈의 filter parameters가 존재하지만 Channel-wise offset 전략을 이용하면 업데이트 할 parameters 수는 $1 * 1 * C^{in}_{l} * C^{out}_{l}$ 로 줄어들게 된다.
+l번째 레이어 parameters $ \theta_{l} $ 에 offset을 적용한다고 가정한다.  
+원래 l번째 레이어에는 $ k _{l} * k _{l} * C^{in} _{l} * C^{out} _{l} $ 사이즈의 filter parameters가 존재한다.  
+
+그러나 Channel-wise offset 전략을 이용하면 업데이트 할 parameters 수는 $ 1 * 1 * C^{in} _{l} * C^{out} _{l} $ 로 줄어들게 된다.  
 
 #### Refinement block
-ResNet output인 16x16x512 feature map에서 Convolution을 통해 1x1x512 size의 feature map으로 만들고 Full-Connected layer를 이용하여 $1 * 1 * C^{in}_{l} * C^{out}_{l}$ size의 offset 값을 얻어낸다.
+ResNet output인 16x16x512 feature map에서 Convolution을 통해 1x1x512 size의 feature map으로 만들고 Full-Connected layer를 이용하여 $1 * 1 * C^{in}_{l} * C^{out} _{l} $ size의 offset 값을 얻어낸다.
 
 ![refinement_block](/assets/posts/hairstyle-transfer/hyperstyle/8.compare_parameters.png){: width="50%" height="25%"}
 

@@ -49,10 +49,10 @@ retrieval-based guidance($I^{r}$)는 아래 식으로 얻어진다.
 > - 학습할 경우 dataset에서 training image를 빼고 진행한다. 
 
 ## 2.2. Distorted Ground-truth as Guidance
-supervision 방식의 학습을 위해서는 pair가 되는 ground true image와 guidance image가 있어야 한다. 그래야 guidance image를 가지고 ground true image를 잘 생성했는지 loss를 계산할 수 있기 때문이다. 그러나 위 Retrieval-based guidance image는 ground true image가 존재하지 않아 supervision 방식 학습이 불가하였다.
+supervision 방식의 학습을 위해서는 pair가 되는 ground trues image와 guidance image가 있어야 한다. 그래야 guidance image를 가지고 ground trues image를 잘 생성했는지 loss를 계산할 수 있기 때문이다. 그러나 위 Retrieval-based guidance image는 ground trues image가 존재하지 않아 supervision 방식 학습이 불가하였다.
 
 ![distorted_GT](/assets/posts/face-design/RESAIL/7.distorted_GT.png)  
-이를 해결하기 위해서 Ground true image를 객체별로 distortion 뒤에 재결합하여 Distored GT ($\widetilde{I}^{gt}$)를 만든다. 이렇게 하면 pair dataset이 만들어 지므로 supervision 학습이 가능해진다.
+이를 해결하기 위해서 Ground trues image를 객체별로 distortion 뒤에 재결합하여 Distored GT ($\widetilde{I}^{gt}$)를 만든다. 이렇게 하면 pair dataset이 만들어 지므로 supervision 학습이 가능해진다.
 
 ## 2.3 Network Architecture
 ### Retrieval-based Spatially Adaptive Normalization(RE-SAIL)
