@@ -6,18 +6,18 @@ categories: [Deep Learning, Multiple-View, Volume Rendering, Neural Radiance Fie
 image: assets/images/logo-3d-rendering.jpeg
 ---
 
-글을 읽기 전에, 3D 카메라 좌표계와 3D 물체가 카메라에 맺히는 원리(Camera Projection)를 이해하는 것을 추천한다.
+글을 읽기 전에, 3D 카메라 좌표계와 3D 물체가 카메라에 맺히는 원리(camera projection)를 이해하는 것을 추천한다.
 
 # Contributions
 - 카메라의 위치 및 각도 정보를 활용하여 **새로운 카메라의 위치 및 각도에서 관찰한 이미지**를 생성해낼 수 있다.
 - Multi Layer Perceptron을 활용한 단순한 구조이다.
 - NeRF의 representation을 활용해서 입력의 표현력이 부족하였다. 이를 개선하기 위해 **positional encoding**을 도입했다.
-- sampling시 요구되는 sample point 및 query 수를 줄이기 위하여 **hierarchical sampling procedure**를 제안한다.
+- Sampling시 요구되는 sample point 및 query 수를 줄이기 위하여 **hierarchical sampling procedure**를 제안한다.
 
 ![motivation](/assets/posts/3d-rendering/nerf/motivation.png)
 
 # Related Works
-3D 물체의 realistic scene representation을 표현하기 위한 기존 방법은 triangle meshes 혹은 voxel grid가 활용되어왔다. 하지만 위와 같은 discrete methods는 scene에 포함되어 있는 complex geometry를 고해상도 이미지로 표현하기에는 역부족이었지만, 본 방법의 Differential Volumentric representation approach는 기존 방법의 결과에 대한 한계를 극복할 수 있었다고 논문에서 서술한다.
+3D 물체의 realistic scene representation을 표현하기 위한 기존 방법은 triangle meshes 혹은 voxel grid가 활용되어왔다. 하지만 위와 같은 discrete methods는 scene에 포함되어 있는 complex geometry를 고해상도 이미지로 표현하기에는 역부족이었지만, 본 방법의 differential volumentric representation approach는 기존 방법의 결과에 대한 한계를 극복할 수 있었다고 논문에서 서술한다.
 
 # Nerual Radiance Field Scene Representation
 
@@ -30,7 +30,7 @@ image: assets/images/logo-3d-rendering.jpeg
 ## Architecture
 
 - 3D coordinate $x$가 8 layer MLP를 통과하여 $\sigma$와 256차원 feature vector를 출력한다.
-- feature vector와 viewing direction을 concat하여 1 layer MLP를 통과시켜 color를 얻는다.
+- Feature vector와 viewing direction을 concat하여 1 layer MLP를 통과시켜 color를 얻는다.
 
 ![architecture](/assets/posts/3d-rendering/nerf/architecture.png)
 
@@ -40,7 +40,7 @@ NeRF에서 활용되는 Volume Rendering에 대한 수식은 아래와 같이 �
 
 $$ C(\textbf{r}) = \int_{t_n}^{t_f} T(t)\sigma(\textbf{r}(t)), \textbf{d})dt, \; where \ T(t)=exp(-\int_{t_n}^{t})\sigma(\textbf{r}(s))ds$$
 
-- 논문의 표현을 인용하면, Volume density $\sigma(x)$는 location $x$의 극소점에서 끝나는 ray의 확률의 미분값으로 이해할 수 있다.
+- 논문의 표현을 인용하면, volume density $\sigma(x)$는 location $x$의 극소점에서 끝나는 ray의 확률의 미분값으로 이해할 수 있다.
 - 쉽게는 density가 클수록 weight가 커야하며 어떤 지점을 가로막고 있는 점들의 density의 합이 작을 수록 weight가 커야한다.
 - $T(t)$는 ray를 따라서 $t_n$에서부터 $t$까지의 누적된 투과도이다. (ray가 $t_n$에서 $t$까지 이동하는 동안 어떤 입자와도 부딪히지 않을 확률과 같다.)
 - **계층화된 샘플링 방식**을 사용한다. $[t_n, t_f]$를 N개의 구간으로 나누고 각 구간에서 uniform 샘플링했다.
@@ -59,7 +59,7 @@ $$ \hat{C}(\textbf{r})=\sum_{i=1}^{N}T_i(1-exp(-\sigma_i\delta_i)\textbf{c}_i, \
 ## Positional encoding
 
 - 위와 같은 Volume Rendering 방법만으로는 color와 geometry의 high-frequency variation을 표현하는데 취약했다.
-- 5D로 입력되는 차원 좀 더 높여서 표현력을 가질수 있도록 High dimension으로 만들어주는 행위이다. $\gamma$로는 아래의 수식을 사용했다.
+- 5D로 입력되는 차원 좀 더 높여서 표현력을 가질수 있도록 high dimension으로 만들어주는 행위이다. $\gamma$로는 아래의 수식을 사용했다.
 
 $$ \gamma(p) = (\sin(2^0\pi p), \cos(2^0\pi p), \cdots , \sin(2^{L-1}\pi p), \cos(2^{L-1}\pi p)) $$
 
@@ -75,7 +75,7 @@ $$ \gamma(p) = (\sin(2^0\pi p), \cos(2^0\pi p), \cdots , \sin(2^{L-1}\pi p), \co
 $$ \hat{C}_c(\textbf{r}) = \sum_{i=1}^{N_c}w_ic_i, \; \; w_i = T_i(1-exp(-\sigma_i\delta_i)) $$
 
 
-- weights에 해당하는 w를 normalize하면 확률변수로 간주할 수 있다.
+- Weights에 해당하는 w를 normalize하면 확률변수로 간주할 수 있다.
 - 이 확률 분포로 부터 $N_f$ locations의 집합을 샘플링하고 첫번째 집합과 두번째 집합 모두를 이용하여 fine network를 evaluate하고 최종 랜더링을 한다.
 
 # implementaion details
