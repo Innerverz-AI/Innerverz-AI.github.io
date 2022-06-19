@@ -53,9 +53,11 @@ $$\hat{\textbf{r}}_{i,m}(h) = \hat{\textbf{o}}_i + h\hat{\textbf{d}}_{i,m}, \; \
 (u-W/2)/\hat{f}_x) \\
 -(v-H/2)/\hat{f}_y)\\
 -1
-\end{pmatrix},
+\end{pmatrix}
+$$
 
-\; \textbf{R} = \textbf{I} + \frac{\sin(\alpha)}{\alpha}\phi^\wedge  + \frac{1-\cos(\alpha)}{\alpha^2}, \; \phi^\wedge = \begin{pmatrix}
+$$
+\textbf{R} = \textbf{I} + \frac{\sin(\alpha)}{\alpha}\phi^\wedge  + \frac{1-\cos(\alpha)}{\alpha^2}, \; \phi^\wedge = \begin{pmatrix}
 \phi_0 \\
 \phi_1 \\
 \phi_2
@@ -127,7 +129,7 @@ COLMAP은 때때로 abnormal camera trajectory를 그리는 반면, NeRF--는 �
 
 ![result-fig5](/assets/posts/3d-rendering/nerf--/result-fig5.png)
 
-COLMAP은 camera pose prediction에 실패한 경우이고, NeRF--는 잘 표현하는 example이다. 
+COLMAP은 camera pose prediction에 실패한 경우이고, NeRF--는 잘 표현하는 example이다.
 
 # Conclusion
 
