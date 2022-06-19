@@ -54,9 +54,9 @@ $$\hat{\textbf{r}}_{i,m}(h) = \hat{\textbf{o}}_i + h\hat{\textbf{d}}_{i,m}, \; \
 -(v-H/2)/\hat{f}_y)\\
 -1
 \end{pmatrix}
+$$
 
-//
-
+$$
 \textbf{R} = \textbf{I} + \frac{\sin(\alpha)}{\alpha}\phi^\wedge  + \frac{1-\cos(\alpha)}{\alpha^2}, \; \phi^\wedge = \begin{pmatrix}
 \phi_0 \\
 \phi_1 \\
