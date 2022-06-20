@@ -2,7 +2,7 @@
 layout: page
 title: About
 permalink: "/about/"
-image: assets/images/screenshot.png
+image: assets/images/AdobeStock_370196348.jpeg
 ---
 
 ## Vision
