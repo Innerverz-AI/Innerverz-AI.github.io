@@ -35,7 +35,7 @@ $$\Theta^*, \Pi^* = arg \ \underset{\Theta, \Pi}{min}\mathcal{L}(\hat{I}, \hat{\
 
 이때 $\Pi$는 camera intrinsic & extrinsic parameter를 모두 포함한다.
 
-위 내용의 basics를 이해하고, NeRF-- method의 쉬운 이해를 돕기 위해 overall pipeline을 먼저 알아보고자 한다.
+위 내용의 basics를 이해하고, 본 논문 method의 쉬운 이해를 돕기 위해 overall pipeline을 먼저 알아보고자 한다.
 
 ## Overall pipeline
 
@@ -102,34 +102,34 @@ $$
 
 ![result-table1](/assets/posts/3d-rendering/nerf--/result-table1.PNG)
 
-여러 scene에 대해서 COLMAP + NeRF 와 NeRF--의 NVS 성능을 비교해본 표이다. 이미지의 quality를 나타낼 수 있는 PSNR, SSIM, LPIPS 지표를 사용하여 평가해보았다. 특정 scene (Orchids, Room)에서 COLMAP에 비해 떨어지는 성능을 보이기도 했으나, 전반적으로 좋은 성능이 나옴을 강조하고 있다. 또한 refinement에 대한 성능 향상 효과도 보이고 있다.
+여러 scene에 대해서 COLMAP + NeRF 와 본 논문의 NVS 성능을 비교해본 표이다. 이미지의 quality를 나타낼 수 있는 PSNR, SSIM, LPIPS 지표를 사용하여 평가해보았다. 특정 scene (Orchids, Room)에서 COLMAP에 비해 떨어지는 성능을 보이기도 했으나, 전반적으로 좋은 성능이 나옴을 강조하고 있다. 또한 refinement에 대한 성능 향상 효과도 보이고 있다.
 
 ![result-table2](/assets/posts/3d-rendering/nerf--/result-table2.PNG)
 
-LLFF-NeRF dataset에 대해 각 trainable parameter의 configuration을 변형해가며 실험한 table이다. 실험 1 (E1)에서는 NeRF-- 통해 얻은 focal length, camera pose와 COLMAP estimated pose와의 오차가 작게 나오는 것을 말한다. 이후 E2-E3에 대해 config 요소를 제외하여 실험해보아도 여전히 여러 요소에서 오차값이 적게 나옴을 강조하고 있다.
+LLFF-NeRF dataset에 대해 각 trainable parameter의 configuration을 변형해가며 실험한 table이다. 실험 1 (E1)에서는 본 논문의 approach를 통해 얻은 focal length, camera pose와 COLMAP estimated pose와의 오차가 작게 나오는 것을 말한다. 이후 E2-E3에 대해 config 요소를 제외하여 실험해보아도 여전히 여러 요소에서 오차값이 적게 나옴을 강조하고 있다.
 
 #### Qualitative results
 
 ![result-fig1](/assets/posts/3d-rendering/nerf--/result-fig1.PNG)
 
-Baseline: COLAMP + NeRF와 정성적으로 비교해본 실험으로 detail적 측면에서 NeRF--의 성능이 더 좋게 나옴을 말하고 있다.
+Baseline: COLAMP + NeRF와 정성적으로 비교해본 실험으로 detail적 측면에서 본 논문의 모델 성능이 더 좋게 나옴을 말하고 있다.
 
 ![result-fig2](/assets/posts/3d-rendering/nerf--/result-fig2.PNG)
 
-학습되는 epoch에 따라 COLMAP의 camera trajectory를 NeRF--가 학습해 나감을 보이고 있다. NeRF 이미지들을 일반적으로 Monocular camera로 부터 얻은 이미지들 이고, scale에 대한 보정을 해준 metric ATE aligned를 활용해보면, COLMAP이 구한 경로와 거의 일치함을 알 수 있다.
+학습되는 epoch에 따라 COLMAP의 camera trajectory를 본 모델이 학습해 나감을 보이고 있다. NeRF 이미지들을 일반적으로 Monocular camera로 부터 얻은 이미지들 이고, scale에 대한 보정을 해준 metric ATE aligned를 활용해보면, COLMAP이 구한 경로와 거의 일치함을 알 수 있다.
 
 ![result-fig3](/assets/posts/3d-rendering/nerf--/result-fig3.PNG)
 
 baseline NeRF는 때때로 real scene에 대해 failure case가 나오게 되는데, COLMAP은 (c)와 같이 NVS에 실패하였고, 이를 수동적인 보정을 통해 얻은 이미지가 (d)
-이다. (d)의 rgb이미지는 NeRF--에 비해 blurry한 모습을 보이고 depth map은 아얘 잘 표현하지 못한반면, NeRF--의 결과 (b)는 rgb, depth 이미지가 잘 표현되고 있음을 알 수 있다.
+이다. (d)의 rgb이미지는 본 논문의 모델에 비해 blurry한 모습을 보이고 depth map은 아얘 잘 표현하지 못한반면, 본 논문의 모델 결과 (b)는 rgb, depth 이미지가 잘 표현되고 있음을 알 수 있다.
 
 ![result-fig4](/assets/posts/3d-rendering/nerf--/result-fig4.PNG)
 
-COLMAP은 때때로 abnormal camera trajectory를 그리는 반면, NeRF--는 더욱 smooth한 경로를 예측함을 알 수 있다.  
+COLMAP은 때때로 abnormal camera trajectory를 그리는 반면, 본 논문의 모델은 더욱 smooth한 경로를 예측함을 알 수 있다.  
 
 ![result-fig5](/assets/posts/3d-rendering/nerf--/result-fig5.PNG)
 
-COLMAP은 camera pose prediction에 실패한 경우이고, NeRF--는 잘 표현하는 example이다.
+본 example은 COLMAP은 camera pose prediction에 실패한 경우이고, 본 논문의 모델은 잘 표현하는 example이다.
 
 # Conclusion
 
