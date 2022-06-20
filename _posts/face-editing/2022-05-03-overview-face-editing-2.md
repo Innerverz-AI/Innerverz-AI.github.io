@@ -2,7 +2,7 @@
 layout: post
 title:  "[Survey] Face Editing 최신 논문 몰아보기: (2) Encoder4Editing, Pivotal Tuning Inversion"
 date:   2022-05-03
-author: 이유경 류원종
+author: 이유경
 tags: [Face Editing, GAN Inversion, Latent Space, StyleGAN] 
 image: assets/images/logo-face-editing.jpeg
 ---
