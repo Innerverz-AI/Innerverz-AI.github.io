@@ -29,7 +29,7 @@ $$ \hat{I}_i(\textbf{p}) = \mathcal{R}(\textbf{p}, \pi_i|\Theta) = \int_{h_n}^{h
 
 $$\mathcal{L} = \sum_{i}^{N}||I_i-\hat{I}_i||^2_2 \; \;\;  \; \Theta^* = arg \ \underset{\Theta}{min}\mathcal{L}(\hat{I}|I, \Pi)$$
 
-기존 NeRF와는 다르게 본 논문에서는 NeRF 모델의 parameter와 camera parameterㄹ를 jointly training해보겠다라는 의도로 아래 수식과 같다.
+기존 NeRF와는 다르게 본 논문에서는 NeRF 모델의 parameter와 camera parameter를 jointly training해보겠다라는 의도로 아래 수식과 같다.
 
 $$\Theta^*, \Pi^* = arg \ \underset{\Theta, \Pi}{min}\mathcal{L}(\hat{I}, \hat{\Pi}|I)$$
 
