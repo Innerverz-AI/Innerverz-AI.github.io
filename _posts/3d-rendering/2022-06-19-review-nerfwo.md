@@ -37,7 +37,7 @@ $$\Theta^*, \Pi^* = arg \ \underset{\Theta, \Pi}{min}\mathcal{L}(\hat{I}, \hat{\
 
 위 내용의 basics를 이해하고, NeRF-- method의 쉬운 이해를 돕기 위해 overall pipeline을 먼저 알아보고자 한다.
 
-## NeRF-- pipeline
+## Overall pipeline
 
 ![overall-pipeline](/assets/posts/3d-rendering/nerf--/overall-pipeline.PNG)
 
