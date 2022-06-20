@@ -7,8 +7,8 @@ topmenu:
 - title: About
   url: "about/"
 
-- title: Contact
-  url: "contact/"
+# - title: Contact
+#   url: "contact/"
 
 # Footer Menu
 footermenu:
@@ -19,8 +19,8 @@ footermenu:
 - title: Privacy Policy
   url: "privacy-policy/"
 
-- title: Contact
-  url: "contact/"
+# - title: Contact
+#   url: "contact/"
 
 - title: Download
   url: https://bootstrapstarter.com/template-affiliates-bootstrap-jekyll/  
