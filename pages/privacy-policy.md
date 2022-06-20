@@ -15,9 +15,9 @@ Where registration is required, the visitor's email and a username will be store
 ### How the Information is used
 The information is used to enhance the vistor's experience when using the website to display personalised content and possibly advertising.
 
-E-mail addresses will not be sold, rented or leased to 3rd parties.
+<!--- E-mail addresses will not be sold, rented or leased to 3rd parties.
 
-E-mail may be sent to inform you of news of our services or offers by us or our affiliates.
+E-mail may be sent to inform you of news of our services or offers by us or our affiliates.-->
 
 ### Visitor Options
 If you have subscribed to one of our services, you may unsubscribe by following the instructions which are included in e-mail that you receive.
