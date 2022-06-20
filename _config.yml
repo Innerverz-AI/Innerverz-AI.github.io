@@ -36,7 +36,7 @@ authors:
     name: 정정영
     display_name: 정정영
     avatar: 'assets/images/john.png'
-    email: ""
+    email: "pensee0.0a@innerverz.com"
     web: ""
     twitter: ""
     description: "정정영입니다."
@@ -56,7 +56,14 @@ authors:
     web: ""
     twitter: ""
     description: "Football Enthusiast"
-  
+  조우영:
+    name: 조우영
+    display_name: 조우영
+    avatar: 'assets/images/sal.png'
+    email: "chowy333@innerverz.com"
+    web: ""
+    twitter: ""
+    description: "조우영입니다."
 
 # Social
 social:
