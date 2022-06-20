@@ -6,7 +6,7 @@ categories: [Deep Learning, Multiple-View, Volume Rendering, Neural Radiance Fie
 image: assets/images/logo-3d-rendering.jpeg
 ---
 
-글을 읽기 전에, 3D 카메라 좌표계와 3D 물체가 카메라에 맺히는 원리(Camera Projection)를 이해하는 것을 추천한다.
+글을 읽기 전에, 3D 카메라 좌표계와 3D 물체가 카메라에 맺히는 원리(camera projection)를 이해하는 것을 추천한다.
 
 # Contributions
 - 카메라의 위치 및 각도 정보를 활용하여 **새로운 카메라의 위치 및 각도에서 관찰한 이미지**를 생성해낼 수 있다.
@@ -17,7 +17,9 @@ image: assets/images/logo-3d-rendering.jpeg
 ![motivation](/assets/posts/3d-rendering/nerf/motivation.png)
 
 # Related Works
-3D 물체의 realistic scene representation을 표현하기 위한 기존 방법은 triangle meshes 혹은 voxel grid가 활용되어왔다. 하지만 위와 같은 discrete methods는 scene에 포함되어 있는 complex geometry를 고해상도 이미지로 표현하기에는 역부족이었지만, 본 방법의 differential Volumentric representation approach는 기존 방법의 결과에 대한 한계를 극복할 수 있었다고 논문에서 서술한다.
+
+3D 물체의 realistic scene representation을 표현하기 위한 기존 방법은 triangle meshes 혹은 voxel grid가 활용되어왔다. 하지만 위와 같은 discrete methods는 scene에 포함되어 있는 complex geometry를 고해상도 이미지로 표현하기에는 역부족이었지만, 본 방법의 differential volumentric representation approach는 기존 방법의 결과에 대한 한계를 극복할 수 있었다고 논문에서 서술한다.
+
 
 # Nerual Radiance Field Scene Representation
 
@@ -58,7 +60,9 @@ $$ \hat{C}(\textbf{r})=\sum_{i=1}^{N}T_i(1-exp(-\sigma_i\delta_i)\textbf{c}_i, \
 
 ## Positional encoding
 
+
 - 위와 같은 volume rendering 방법만으로는 color와 geometry의 high-frequency variation을 표현하는데 취약했다.
+
 - 5D로 입력되는 차원 좀 더 높여서 표현력을 가질수 있도록 high dimension으로 만들어주는 행위이다. $\gamma$로는 아래의 수식을 사용했다.
 
 $$ \gamma(p) = (\sin(2^0\pi p), \cos(2^0\pi p), \cdots , \sin(2^{L-1}\pi p), \cos(2^{L-1}\pi p)) $$

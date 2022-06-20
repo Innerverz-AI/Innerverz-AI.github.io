@@ -34,9 +34,21 @@ SEAN에서 소개하는 style encoder는 Encoder-decoder와 semantic image regio
 
 input 으로 real image가 들어오면 Style Encoder를 거쳐 512 x s dimensional style matrix **ST**가 output으로 나오게 된다. 각 dimension 마다 대응되는 semantic image region 영역에 대한 style vector 정보를 가지고 있다.  
 
+## 3.3 Architecture
+### SEAN ResBlk
+![network](/assets/posts/face-design/SEAN/3.network.png){: width="100%", height="100%"}<br>
+
+SEAN의 generator 구조는 StyleGAN의 영향을 많이 받았다. Style 정보를 Generator process 중간에 넣어주는 방식, style code가 들어가는 layer의 위치에 따라 결정되는 style 요소가 다른 것 또한 비슷하다.(SEAN generator에는 layer별로 다른 style 정보를 넣어준다. 이는 w+을 따라한듯.) 또한 noise(B)를 추가하여 SEAN 생성 능력을 향상시켰다.
+
+추가적으로 SEAN ResBlk 내부에는 SEAN이 3개 들어있는데, 논문은 각 SEAN마다 다르게 style matrix가 들어가도록 설계했다. 이 이유는 ablation study를 통해 알 수 있다.
+
+![ablation_fig](/assets/posts/face-design/SEAN/5.ablation_fig.png){: width="100%", height="100%"}<br>
+
+![ablation_fig](/assets/posts/face-design/SEAN/6.ablation_table.png)
+> SEAN-level encoder가 전반적으로 더 우수함을 보인다.
+
 ## 3.2 Style Control
 논문에서 style control을 위해 Semantic Region-Adaptive Normalization(SEAN)을 새롭게 소개한다. SEAN은 생성된 per-region style code와 segmentation mask를 input으로 받아 ADAIN과 비슷하게 modulating을 진행한다.
-
 
 ### SEAN normalization
 ![SEAN_normalization](/assets/posts/face-design/SEAN/4.SEAN_normalization.png){: width="100%", height="100%"}<br>
@@ -60,18 +72,6 @@ SEAN normalization은 style matrix **ST**와 segmentation mask를 input으로 �
 - SEAN은 SPADE 구조를 기반으로 만들어 졌다.
 - SPADE upsampling layer에 SEAN ResNet block(SEAN ResBlk)를 적용하였다.
 
-## 4.1. SEAN ResBlk
-![network](/assets/posts/face-design/SEAN/3.network.png){: width="100%", height="100%"}<br>
-
-SEAN의 generator 구조는 StyleGAN의 영향을 많이 받았다. Style 정보를 Generator process 중간에 넣어주는 방식, style code가 들어가는 layer의 위치에 따라 결정되는 style 요소가 다른 것 또한 비슷하다.(SEAN generator에는 layer별로 다른 style 정보를 넣어준다. 이는 w+을 따라한듯.) 또한 noise(B)를 추가하여 SEAN 생성 능력을 향상시켰다.
-
-추가적으로 SEAN ResBlk 내부에는 SEAN이 3개 들어있는데, 각 SEAN마다 다르게 style matrix가 들어간다. 이 이유는 ablation study를 통해 알 수 있다.
-
-![ablation_fig](/assets/posts/face-design/SEAN/5.ablation_fig.png){: width="100%", height="100%"}<br>
-
-![ablation_fig](/assets/posts/face-design/SEAN/6.ablation_table.png)
-> SEAN-level encoder가 전반적으로 더 우수함을 보인다.
-
 # 5. Result
 ### Dataset
 - CelebAMask-HQ
@@ -94,6 +94,7 @@ SEAN의 generator 구조는 StyleGAN의 영향을 많이 받았다. Style 정보
 
 ![quantitative_comparsions2](/assets/posts/face-design/SEAN/8.quantitative_comparsions2.png)
 
+전반적으로 SEAN이 잘 생성한다.
 ## 5.3. Qualitative results
 ![qualitative_results](/assets/posts/face-design/SEAN/9.qualitative_results.png){: width="100%", height="100%"}<br>
 - Pix2PixHD, SPADE는 측면 얼굴과 늙은 사람을 잘 생성하지 못한다.
