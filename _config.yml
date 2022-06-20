@@ -48,6 +48,15 @@ authors:
     web: ""
     twitter: ""
     description: "이유경입니다."
+  김준혁:
+    name: 김준혁
+    display_name: 김준혁
+    avatar: 'assets/images/jk.jpg'
+    email: "junejoon.kim@innerverz.com"
+    web: ""
+    twitter: ""
+    description: "Football Enthusiast"
+  
 
 # Social
 social:
