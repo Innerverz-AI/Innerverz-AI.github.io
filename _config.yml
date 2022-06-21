@@ -66,6 +66,14 @@ authors:
     web: ""
     twitter: ""
     description: "조우영입니다."
+   김재훈:
+    name: 김재훈
+    display_name: 김재훈
+    avatar: 'assets/images/source_m2.png'
+    email: "smoked22@innerverz.com"
+    web: ""
+    twitter: ""
+    description: "김재훈입니다."
 
 # Social
 social:
