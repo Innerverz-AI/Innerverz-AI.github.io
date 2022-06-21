@@ -3,7 +3,7 @@ layout: post
 title:  "[Paper Review] Fast, Robust, Controllable Text to Speech"
 author: 김재훈 
 categories: [Deep Learning, Text-to-Speech, Speech Synthesis, Transformer]
-image: assets/images/logo-3d-rendering.jpeg
+image: assets/images/logo-speech.jpeg
 ---
 
 # 1. Overview
