@@ -14,7 +14,7 @@ image: assets/images/logo-3d-rendering.jpeg
 
 # Related Works
 
-- Faster NeRF rendering을 하기위한 기존 여러 방법들이 존재했다. 대표적으로 Neural Sparse Voxel Fields (NSVF)에서는 3D bounded scene을 uniform 3D voxel grid로 표현하여 rendering time을 줄일 수 있었다. 하지만 NSVF에서는 a single feature conditioned network를 활용하였기 때문에, entire scene을 표현하기 위한 network capacity를 줄이기는 어려웠다. 본 kilonerf는 thousands of small networks를 이용하여, 각 network가 small region을 담당하도록 만들어 network의 lower capacity를 구현할 수 있었다.
+- Faster NeRF rendering을 하기위한 기존 여러 방법들이 존재했다. 대표적으로 Neural Sparse Voxel Fields (NSVF)에서는 3D bounded scene을 uniform 3D voxel grid로 표현하여 rendering time을 줄일 수 있었다. 하지만 NSVF에서는 a single feature conditioned network를 활용하였기 때문에, entire scene을 표현하기 위한 network capacity를 줄이기는 어려웠다. KiloNeRF는 thousands of small networks를 이용하여, 각 network가 small region을 담당하도록 만들어 network의 lower capacity를 구현할 수 있었다.
 
 # KiloNeRF
 
@@ -24,7 +24,7 @@ image: assets/images/logo-3d-rendering.jpeg
 
 ![aabb](/assets/posts/3d-rendering/kilonerf/aabb.PNG)
 
-- 위 그림과 같이 minimum bound $\textbf{b}_{min}$, maximum bound $\textbf{b}_{max}$가 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. $\textbf{b}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다.
+- 위 그림과 같이 minimum bound, maximum bound가 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. $\textbf{b}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다.
 
 $$ g(\textbf{x}) = \left \lfloor (\textbf{x} - \textbf{b}_{min})/((\textbf{b}_{max} - \textbf{b}_{min})/\textbf{r}) \right \rfloor $$
 
@@ -52,7 +52,7 @@ $$ \hat{\textbf{c}} = \sum_{i=1}^{K}T_i\alpha_i\textbf{c}_i, \; \; \;  T_i = \pr
 
 ### Regularization
 
-- **Model capacity를 바꿀 때에는 inductive bias를 필수적으로 고려해야한다.** 이를 맞춰주기 위해 저자는 처음에 the last hidden layer의 output feature 수를 줄여보는 식으로 kilonerf model을 구성해보았으나, 결과적으로 visual loss로 이어짐을 알 수 있었다. 따라서 본 저자들은 view-dependent modeling of the color 부분을 맡고 있는 the last two layers of the network의 weights와 biases들을 $L_2$ regularization을 걸어주었다. 위 방법을 따른 결과, visual quality에 대한 손실 없이, 기존 NeRF와 같은 inductive bias를 같도록 유도하였다.
+- **Model capacity를 바꿀 때에는 inductive bias를 필수적으로 고려해야한다.** 이를 맞춰주기 위해 저자는 처음에 the last hidden layer의 output feature 수를 줄여보는 식으로 KiloNeRF model을 구성해보았으나, 결과적으로 visual loss로 이어짐을 알 수 있었다. 따라서 본 저자들은 view-dependent modeling of the color 부분을 맡고 있는 the last two layers of the network의 weights와 biases들을 $L_2$ regularization을 걸어주었다. 위 방법을 따른 결과, visual quality에 대한 손실 없이, 기존 NeRF와 같은 inductive bias를 같도록 유도하였다.
 
 ## Sampling
 
@@ -106,4 +106,4 @@ Ablation study를 진행해본 정성적인 결과이다. 왼쪽부터 single ti
 
 # Discussion
 
-- 논문에서도 언급하다시피 3D object scene을 표현하기 위해 3D voxel grid의 형식으로 표현하기 위해 AABB 방법을 사용하였다. 하지만  minimum bound $\textbf{b}_{min}$, maximum bound $\textbf{b}_{max}$ 을 활용하였으므로 unbounded scene에 대해서 표현하기는 어려웠다. Novel view synthesis를 하기 위한 dataset에는 unbounded scene에 대한 case도 존재하므로 추후에 unbounded scene 합성과 reducing rendering time에 대한 연구도 진행될 수 있을 것이다.
+- 논문에서도 언급하다시피 3D object scene을 표현하기 위해 3D voxel grid의 형식으로 표현하기 위해 AABB 방법을 사용하였다. 하지만  minimum bound, maximum bound를 활용하였으므로 unbounded scene에 대해서 표현하기는 어려웠다. Novel view synthesis를 하기 위한 dataset에는 unbounded scene에 대한 case도 존재하므로 추후에 unbounded scene 합성과 reducing rendering time에 대한 연구도 진행될 수 있을 것이다.
