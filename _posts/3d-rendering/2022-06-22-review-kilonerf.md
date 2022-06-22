@@ -24,7 +24,7 @@ image: assets/images/logo-3d-rendering.jpeg
 
 ![aabb](/assets/posts/3d-rendering/kilonerf/aabb.PNG)
 
-- 위 그림과 같이 minimum bound $\textbf{b}_min$, maximum bound $\textbf{b}_max$가 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. $\textbf{b}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다.
+- 위 그림과 같이 minimum bound $\textbf{b}_{min}$, maximum bound $\textbf{b}_{max}$가 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. $\textbf{b}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다.
 
 $$ g(\textbf{x}) = \left \lfloor (\textbf{x} - \textbf{b}_{min})/((\textbf{b}_{max} - \textbf{b}_{min})/\textbf{r}) \right \rfloor $$
 
@@ -38,7 +38,7 @@ $$ (\textbf{c}, \sigma) = f_{\theta(g(\textbf{x}))}(\textbf{x}, \textbf{d}) $$
 
 - 위 그림은 original NeRF MLP를 tiny MLP로 바꾼 그림이다. 그림에서 볼 수 있다시피, 기존 MLP와 model configuration이 바뀐 것을 확인할 수 있다. 구현을 위해 더 자세한 configuration을 알고자 한다면 본 논문을 참고하는 것이 좋을 것 같다.
 
-$$\mathcal{L} = \sum_{i}^{N}||I_i-\hat{I}_i||^2_2 \; \;\;  \; \Theta^* = arg \ \underset{\Theta}{min}\mathcal{L}(\hat{I}|I, \Pi)$$
+$$\mathcal{L} = \sum_{i}^{N}||I_i-\hat{I}_i||^2_2, \; \;\;  \; \Theta^* = arg \ \underset{\Theta}{min}\mathcal{L}(\hat{I}|I, \Pi)$$
 
 ## Training with Distilation
 
@@ -48,7 +48,7 @@ $$\mathcal{L} = \sum_{i}^{N}||I_i-\hat{I}_i||^2_2 \; \;\;  \; \Theta^* = arg \ \
 - 구체적인 방법으로는 각각의 teacher, student 모델에서 출력되는 $\alpha$-values와 color values ($\textbf{c}$)를 같도록 $L_2$ loss를 걸어줘서 student's model의 parameters를 optimize했다.
 - $\alpha$-value의 유래는 기존 NeRF가 출력하는 $\textbf{c}$와 $\sigma$ 값에 의존한다.
 
-$$ \hat{\textbf{c}} = \sum_{i=1}^{K}T_i\alpha_i\textbf{c}_i \; \; \;  T_i = \prod_{j=1}^{i-1}(1-\alpha_j) \; \; \; \alpha_i = 1-exp(\sigma_i\delta_i) $$
+$$ \hat{\textbf{c}} = \sum_{i=1}^{K}T_i\alpha_i\textbf{c}_i, \; \; \;  T_i = \prod_{j=1}^{i-1}(1-\alpha_j), \; \; \; \alpha_i = 1-exp(\sigma_i\delta_i) $$
 
 ### Regularization
 
@@ -106,4 +106,4 @@ Ablation study를 진행해본 정성적인 결과이다. 왼쪽부터 single ti
 
 # Discussion
 
-- 논문에서도 언급하다시피 3D object scene을 표현하기 위해 3D voxel grid의 형식으로 표현하기 위해 AABB 방법을 사용하였다. 하지만 minimum bound $\textbf{b}_{min}$ 과 maximum bound $ \textbf{b}_{min} $을 활용하였으므로 unbounded scene에 대해서 표현하기는 어려웠다. Novel view synthesis를 하기 위한 dataset에는 unbounded scene에 대한 case도 존재하므로 추후에 unbounded scene 합성과 reducing rendering time에 대한 연구도 진행될 수 있을 것이다.
+- 논문에서도 언급하다시피 3D object scene을 표현하기 위해 3D voxel grid의 형식으로 표현하기 위해 AABB 방법을 사용하였다. 하지만  minimum bound $\textbf{b}_{min}$, maximum bound $\textbf{b}_{max}$ 을 활용하였으므로 unbounded scene에 대해서 표현하기는 어려웠다. Novel view synthesis를 하기 위한 dataset에는 unbounded scene에 대한 case도 존재하므로 추후에 unbounded scene 합성과 reducing rendering time에 대한 연구도 진행될 수 있을 것이다.
