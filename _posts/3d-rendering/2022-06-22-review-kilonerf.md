@@ -38,8 +38,6 @@ $$ (\textbf{c}, \sigma) = f_{\theta(g(\textbf{x}))}(\textbf{x}, \textbf{d}) $$
 
 - 위 그림은 original NeRF MLP를 tiny MLP로 바꾼 그림이다. 그림에서 볼 수 있다시피, 기존 MLP와 model configuration이 바뀐 것을 확인할 수 있다. 구현을 위해 더 자세한 configuration을 알고자 한다면 본 논문을 참고하는 것이 좋을 것 같다.
 
-$$\mathcal{L} = \sum_{i}^{N}||I_i-\hat{I}_i||^2_2, \; \;\;  \; \Theta^* = arg \ \underset{\Theta}{min}\mathcal{L}(\hat{I}|I, \Pi)$$
-
 ## Training with Distilation
 
 ![distilation](/assets/posts/3d-rendering/kilonerf/distillation.PNG)
