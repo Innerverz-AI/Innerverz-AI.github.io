@@ -83,7 +83,7 @@ close-up을 해보았을 때, D-NeRF가 blurry artifact가 덜했고 ground trut
 
 # Conclusion
 
-- 기존 NeRF static object assumption에서 벗어나 rigid, non-rigid motion에 대해 novel view synthesis를 할 수 있는 방법을 제안했다. 단순히 time: t 정보를 NeRF input에 concat한 것이 아니라, 네트워크를 2개의 모듈로 나누어서 전략적으로 학습할 수 있는 방법을 제안하였다.
+- 기존 NeRF static object assumption에서 벗어나 rigid, non-rigid motion에 대해 novel view synthesis를 할 수 있는 방법을 제안했다. 단순히 time $t$ 정보를 NeRF input에 concat한 것이 아니라, 네트워크를 2개의 모듈로 나누어서 전략적으로 학습할 수 있는 방법을 제안하였다.
 
 # Discussion
 
