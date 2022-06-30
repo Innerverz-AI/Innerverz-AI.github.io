@@ -20,7 +20,7 @@ image: assets/images/logo-3d-rendering.jpeg
 
 ![overall-pipeline](/assets/posts/3d-rendering/nerface/overall-pipeline.PNG)
 
-- 위 그림은 본 모델인 Nerface의 overall pipeline이다. 먼저 본 네트워크를 학습하기 위해서는 input frame, background without human, 3D morphable model, 각 frame에 해하는 per-frame learnable code $\gamma \in \mathbb{R}^{M\times 32} $가 필요하다. 3D morphable model을 통해 사진 속 human의 pose 정보 $\textbf{p} \in \mathbb{R}^{4\times 4}$, camera intrinsics $(f_{x,y}, c_{x,y}) \in \mathbb{R}^{3\times 3}$, expression $\delta \in \mathbb{R}^{76}$ 를 추출한다. $\textbf{p}$ 와 $(f_{x,y}, c_{x,y})$ 를 통해 viewing ray sampling 작업을 거쳐서 각 pixel에 해당하는 ray를 정의하고, 그 ray의 direction vector $\vec{v}$를 구해 NeRF 모델에 입력한다. 추가적으로 정의해둔 perframe-learnable code $\gamma$ 와 expression $\delta$ 정보를 함께 NeRF 모델에 입력하고, 출력값으로 얻은 color와 density를 기반으로 rendering을 진행한다. 아래 식이 overall pipeline을 간단한 식으로 나타낸 수식이다.
+- 위 그림은 본 모델인 Nerface의 overall pipeline이다. 먼저 본 네트워크를 학습하기 위해서는 input frame, background without human, 3D morphable model, 각 frame 별 per-frame learnable code $\gamma \in \mathbb{R}^{M\times 32} $가 필요하다. 3D morphable model을 통해 사진 속 human의 pose 정보 $\textbf{p} \in \mathbb{R}^{4\times 4}$, camera intrinsics $(f_{x,y}, c_{x,y}) \in \mathbb{R}^{3\times 3}$, expression $\delta \in \mathbb{R}^{76}$ 를 추출한다. $\textbf{p}$ 와 $(f_{x,y}, c_{x,y})$ 를 통해 viewing ray sampling 작업을 거쳐서 각 pixel에 해당하는 ray를 정의하고, 그 ray의 direction vector $\vec{v}$를 구해 NeRF 모델에 입력한다. 추가적으로 정의해둔 perframe-learnable code $\gamma$ 와 expression $\delta$ 정보를 함께 NeRF 모델에 입력하고, 출력값으로 얻은 color와 density를 기반으로 rendering을 진행한다. 아래 식이 overall pipeline을 간단한 식으로 나타낸 수식이다.
 
 $$ D_\theta(\textbf{p}, \vec{v}, \delta, \gamma) = (RGB, \sigma) $$
 
@@ -36,7 +36,7 @@ $$ D_\theta(\textbf{p}, \vec{v}, \delta, \gamma) = (RGB, \sigma) $$
 
 - 본 논문에서 reenactment task를 구현하는 것에 있어 부가적인 모듈들을 소개하는 문단이다.
 
-- 첫번째로, 3D morphable model으로 부터 얻을 수 있는 transformation matrx $P$를 활용하여 저자들은 test time때 head pose를 control할 수 있도록 만들었다.
+- 첫번째로, 3D morphable model으로 부터 얻을 수 있는 transformation matrix $P$를 활용하여 저자들은 test time때 head pose를 control할 수 있도록 만들었다.
 
 - 두번째로, static background와 dynamic object를 분리할 수 있도록 static background에 해당하는 each end of the ray value를 background image value값과 같도록 fix 시켜주었다. 또한 background의 density는 foreground의 density보다 낮기 때문에 이를 쉽게 분류할 수 있고, 이 특성을 이용하여 decouple 시켰다. 이는 head 주변의 background가 blur해지는 현상을 방지할 수 있었다고 저자는 설명한다.
 
