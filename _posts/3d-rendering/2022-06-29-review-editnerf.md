@@ -8,7 +8,7 @@ image: assets/images/logo-3d-rendering.jpeg
 ---
 
 # Contributions
-- **본 논문에서는 category-level로 user-defined object editing을 할 수 있는 Volume rendering modeling 방식을 제안한다.** 구체적으로 object의 color와 shape을 editing하기 위해 각 part를 해당하는 color branch, shape branch를 나누었고, 두 모듈이 conditionally 학습된다. 그 효과로는 color와 shape에 대한 editing이 가능해졌을 뿐만아니라, 모델이 same categorie내의 수많은 instance를 보며 어떠한 semantic supervision 없이 category-level editing이 가능했다라는 것을 강조한다. 실험적으로, user scribble tool을 이용하여 user defined color & shape을 control해준 결과, object를 realistic하고 multi-view consistent하게 reconstruction할 수 있음을 보였다.
+- **본 논문에서는 category-level로 user-defined object editing을 할 수 있는 Volume rendering modeling 방식을 제안한다.** 구체적으로 object의 color와 shape을 editing하기 위해 각 part를 해당하는 color branch, shape branch를 나누었고, 두 모듈이 conditionally 학습된다. 그 효과로는 color와 shape에 대한 editing이 가능해졌을 뿐만아니라, 모델이 same category 내의 수많은 instance를 보며 어떠한 semantic supervision 없이 category-level editing이 가능했다라는 것을 강조한다. 실험적으로, user scribble tool을 이용하여 user defined color & shape을 control해준 결과, object를 realistic하고 multi-view consistent하게 reconstruction할 수 있음을 보였다.
 
 ![motivation](/assets/posts/3d-rendering/editnerf/motivation.PNG)
 
@@ -22,7 +22,7 @@ Color와 shape에 대한 editing 뿐만 아니라 color/shape transfer도 가능
 
 ![architecture](/assets/posts/3d-rendering/editnerf/architecture.PNG)
 
-- **본 architecture는 크게 color를 담당하는 branch, shape을 담당하는 branch, shared network로 구성된다.** 저자는 여러 parameter updating 방법 (a), (b), (c)을 활용하여 test를 진행해보았다. 첫번째로, latent code만 업데이트하는 (a) 방법은 low-quality edit의 결과가 나왔다고 한다. (b) 방법은 전체 네트워크를 동시에 학습시키는 방법인데, 학습 속도가 굉장히 느렸고, unwanted changes가 보였다고 한다. 최종적으로 저자는 the later laters of the network 만 finetuing하는 (c) 방법을 택하였는데, computational cost도 줄일 수 있었고 edit하고자 하는 부분에 대해 잘 편집할 수 있었다고 한다. Task를 수행하기위한 입, 출력 식은 아래와 같다.
+- **본 architecture는 크게 color를 담당하는 branch, shape을 담당하는 branch, shared network로 구성된다.** 저자는 여러 parameter updating 방법 (a), (b), (c)을 활용하여 test를 진행해보았다. 첫번째로, latent code만 업데이트하는 (a) 방법은 low-quality edit의 결과가 나왔다고 한다. (b) 방법은 전체 네트워크를 동시에 학습시키는 방법인데, 학습 속도가 굉장히 느렸고, unwanted changes가 보였다고 한다. 최종적으로 저자는 the later layers of the network 만 finetuing하는 (c) 방법을 택하였는데, computational cost도 줄일 수 있었고 edit하고자 하는 부분에 대해 잘 편집할 수 있었다고 한다. Task를 수행하기 위한 입, 출력 식은 아래와 같다.
 
 $$ (\textbf{c}, \sigma) = F(\textbf{x}, \textbf{d}, \textbf{z}^{(s)},\textbf{z}^{(c)}) $$
 
@@ -48,17 +48,17 @@ $$ \hat{C}(\textbf{r}, \textbf{z}^{(s)}, \textbf{z}^{(c)}) = \sum_{i=1}^{N_c-1}c
 
 $$ L_{rec} = \sum_{(\textbf{r}, \textbf{c}_f) \in y_f}^{}\left\| \hat{C}(\textbf{r}, \textbf{z}^{(s)}, \textbf{z}^{(c)}) - \textbf{c}_f\right\|+\sum_{(\textbf{r}, \textbf{c}_b) \in y_b}^{}\left\| \hat{C}(\textbf{r}, \textbf{z}^{(s)}, \textbf{z}^{(c)}) - \textbf{c}_b\right\| $$
 
-- $c_f$는 forground, 바꾸고자하는 desired color를 동시에 의미하고, $c_b$는 background, unchanged가 되길 원하는 color를 의미한다.
+- $c_f$는 foreground, 바꾸고자하는 desired color를 동시에 의미하고, $c_b$는 background, unchanged가 되길 원하는 color를 의미한다.
 
 - reconstruction loss를 기반으로 color editing에 필요한 total loss는 아래 식과 같다.
 
 $$ L_{color} = L_{rec} + \gamma_{reg} \cdot L_{reg}$$
 
-여기서 L_{reg}는 논문에 구체적인 수식으로 표현되어 있지는 않지만, large deviation을 방지하기 위해 original model와 updated model의 weight간 squared-distance를 좁혀주고자 했던 의도로 사용되었다. 추가적으로 color editing시에 latent code vector $\textbf{z}^{(c)}$와 $F_rad$를 같이 학습하고 $\gamma_{reg} =10$으로 설정했다고 한다.
+여기서 $L_{reg}$는 논문에 구체적인 수식으로 표현되어 있지는 않지만, large deviation을 방지하기 위해 original model와 updated model의 weight간 squared-distance를 좁혀주고자 했던 의도로 사용되었다. 추가적으로 color editing시에 latent code vector $\textbf{z}^{(c)}$와 $F_{rad}$를 같이 학습하고 $\gamma_{reg} =10$으로 설정했다고 한다.
 
 ## Shape Editing Loss
 
-- 먼저 removal하는 task를 보면 color editing에서 로 density를 고려하는 term 하나가 추가되었다. 마찬가지로 foreground, background와 함께 지우고자 하는 location에도 user가 정의해준다.
+- 먼저 removal하는 task를 보면 color editing에서 low density를 고려하는 term 하나가 추가되었다. 마찬가지로 foreground, background와 함께 지우고자 하는 location에도 user가 정의해준다.
 
 $$L_{remove} = L_{rec} + \gamma_{dens}\cdot L_{dens} + \gamma_{reg}\cdot L_{reg}, \; \; L_{dens} = -\sum_{\textbf{r} \in y_f}^{}\sigma^\textbf{T}_\textbf{r}log(\sigma_\textbf{r})$$
 
