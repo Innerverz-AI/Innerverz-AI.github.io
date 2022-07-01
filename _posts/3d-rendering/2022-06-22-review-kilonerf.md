@@ -24,7 +24,7 @@ image: assets/images/logo-3d-rendering.jpeg
 
 ![aabb](/assets/posts/3d-rendering/kilonerf/aabb.PNG)
 
-- 위 그림과 같이 minimum bound, maximum bound가 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. $\textbf{a}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다.
+- 위 그림과 같이 minimum bound, maximum bound가 3차원 좌표계$(x,y,z)$로 정의되어 있고 a uniform grid of resolution $\textbf{r}$로 grid를 나누어 준다. 위 오른쪽 그림을 보면, $\textbf{a}$는 3d vector 좌표계로 표현되어 있고 vector analysis의 개념에서 spatial binning을 진행한 아래 식을 쉽게 이해할 수 있다. 다만, resolution을 나누는 과정에서 소프트웨어적으로 구현을 위해 소수점으로 나오는 position들에 대해서는 버림을 취해서 정수값으로 만들어주는 과정이 추가되었다.
 
 $$ g(\textbf{x}) = \left \lfloor (\textbf{x} - \textbf{a}_{min})/((\textbf{a}_{max} - \textbf{a}_{min})/\textbf{r}) \right \rfloor $$
 
