@@ -8,7 +8,7 @@ image: assets/images/logo-3d-rendering.jpeg
 ---
 
 # Contributions
-- **본 논문에서는 사람의 얼굴 표정에 존재하는 많은 dynamics 혹은 expressions에 대한 정보를 포함할 수 있는 Volume rendering 방식을 제안한다.** 구체적으로 low-dimensional morphable model 이라는 외부 모듈을 이용하여 본 scene representation task에 포함시켰다. 그 효과로는 사람의 얼굴에 있어 pose나 expressions에 대한 explicit control이 가능해졌다. 또한, monocular input data만을 활용하여 본 task를 수행할 수 있음을 저자는 강조하고 있다. 실험적으로, 각종 video based reenactment methods와 성능 비교를 하였고, 본 모델이 그들을 뛰어넘는 성능을 얻을 수 있었음을 보였다.
+- **본 논문에서는 사람의 얼굴 표정에 존재하는 많은 dynamics 혹은 expressions에 대한 정보를 고려할 수 있는 Volume rendering 방식을 제안한다.** 구체적으로 low-dimensional morphable model 이라는 외부 모듈을 이용하여 본 scene representation task에 포함시켰다. 그 효과로는 사람의 얼굴에 있어 pose나 expressions에 대한 explicit control이 가능해졌다. 또한, monocular input data만을 활용하여 본 task를 수행할 수 있음을 저자는 강조하고 있다. 실험적으로, 각종 video based reenactment methods와 성능 비교를 하였고, 본 모델이 그들을 뛰어넘는 성능을 얻을 수 있었음을 보였다.
 
 ![motivation](/assets/posts/3d-rendering/nerface/motivation.PNG)
 
